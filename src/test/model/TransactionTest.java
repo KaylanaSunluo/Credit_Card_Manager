@@ -7,8 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TransactionTest {
 
@@ -25,12 +24,17 @@ public class TransactionTest {
 
     }
 
-//    @Test
-//    public void testTransaction(){
-//        Transaction t1 = new Transaction("2020-01-02",100);
-//
-//
-//    }
+
+
+    @Test
+    public void testGetDate() {
+        assertEquals("2020-02-02",transaction1.getDate());
+    }
+
+    @Test
+    public void testGetAmount() {
+        assertEquals(2000,transaction1.getAmount());
+    }
 
 
 

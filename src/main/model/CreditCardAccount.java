@@ -14,7 +14,7 @@ import java.util.Date;
 public class CreditCardAccount {
     private static int nextAccountNo = 1;    // tracks number of next account created
     private int accountNo;                   // account number
-    private int cardNo;                      // card number
+    private String cardNo;                   // card number
     private String name;                     // cardholder name of card holder
     private String address;                  // the address of card holder
     private String phoneNo;                  // the phone number of card holder
@@ -25,38 +25,32 @@ public class CreditCardAccount {
 
     private TransactionList transactions;  // the list of past transactions
 
+
     /*
      * REQUIRES: cardNumber consists of 16 digits, starting with 3761, no space;
      *           phone is in form: (123) 4567890;
      *           initialCreditLimit >= 1000
-     * EFFECTS: account number is a positive integer not assigned to any other credit card account;
-     *          cardNo id set to cardNumber; name on credit card account is set to cardHolderName;
-     *          address on credit card account is set to cardHolderAddress; phone number on credit
-     *          card account is set to phone; credit limit is set to initialCreditLimit; balance on
-     *          credit card account is set to 0; transaction list is set to a empty list.
+     * EFFECTS: constructs a credit card account with account number, card number, card holder name,
+     *          card holder address, card holder phone number, credit limit, zero balance and
+     *          an empty transaction list.
+     *
+     *          account number is a positive integer not assigned to any other credit card account;
+     *          cardNo is in the form "xxxx xxxx xxxx xxxx"; name on credit card account is set to
+     *          cardHolderName; address on credit card account is set to cardHolderAddress; phone
+     *          number on credit card account is set to phone; credit limit is set to initialCreditLimit;
+     *          balance on credit card account is set to 0; transaction list is set to a empty list.
      */
-    public void creditCardAccount(int cardNumber,
-                                  String cardHolderName,
-                                  String cardHolderAddress,
-                                  String phone,
-                                  int initialCreditLimit) throws ParseException {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate localDate = LocalDate.now();
-//        System.out.println(dtf.format(localDate));
 
-
-
-
-        accountNo = nextAccountNo++;
-        cardNo = cardNumber;
-        name = cardHolderName;
-        address = cardHolderAddress;
-        phoneNo = phone;
-        creditLimit = initialCreditLimit;
-        balance = 0;
-//        upToDateStatement = new Statement(localDate.toString(),
-//                0,28,transactions);
-        transactions = new TransactionList();
+    public CreditCardAccount(String cardNumber, String cardHolderName, String cardHolderAddress,
+                             String phone, int initialCreditLimit) {
+        this.accountNo = nextAccountNo++;
+        this.cardNo = cardNumber;
+        this.name = cardHolderName;
+        this.address = cardHolderAddress;
+        this.phoneNo = phone;
+        this.creditLimit = initialCreditLimit;
+        this.balance = 0;
+        this.transactions = new TransactionList();
     }
 
     // getters
@@ -72,18 +66,20 @@ public class CreditCardAccount {
         return balance;
     }
 
+    public double getCreditLimit() {
+        return creditLimit;
+    }
+
     public TransactionList getTransactions() {
         return transactions;
     }
 
-//    public Statement getUpToDateStatement() {
-//        return upToDateStatement;
-//    }
 
 
 
-    /*
-     * MODIFIES: this
+
+
+    /*  MODIFIES: this
      * EFFECTS: amount is deducted from balance and updated
      * 			balance is returned
      */

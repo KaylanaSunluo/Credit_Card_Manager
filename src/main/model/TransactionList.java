@@ -2,27 +2,31 @@ package model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 
 
 // represents a list of transactions happened so far
-public class TransactionList extends LinkedList<Transaction> {
-    private LinkedList<Transaction> transactionList;
+public class TransactionList {
+
+    private Transaction transaction;
+    private List<Transaction> transactionList;
 
     // Construct an empty collection of transactions
     public TransactionList() {
-        transactionList = new LinkedList<>();
+        transactionList = new ArrayList<>();
     }
 
     // MODIFIES: this
     // EFFECTS: adds a new transaction to the first of transaction list happened
-    public void insertTransaction(Transaction t) {
-        transactionList.addFirst(t);
+    public void insertTransaction(Transaction transaction) {
+        transactionList.add(transaction);
     }
 
     // EFFECTS: returns the number of transactions in the list
-    public int transactionNum() {
+    public int length() {
         return transactionList.size();
     }
 
@@ -41,7 +45,8 @@ public class TransactionList extends LinkedList<Transaction> {
     // MODIFIES: this
     // EFFECTS: returns a transaction list containing transactions happened before the given date
     public LinkedList<Transaction> transactionListBeforeGivenDate(String givenDate) throws ParseException {
-        LinkedList transactionListResult = new LinkedList<Transaction>();
+        LinkedList<Transaction> transactionListResult;
+        transactionListResult = new LinkedList<>();
 
         for (Transaction eachTransaction : transactionList) {
             if (eachTransaction.beforeDate(givenDate)) {
