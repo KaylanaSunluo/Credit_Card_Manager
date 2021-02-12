@@ -23,7 +23,14 @@ read and extract necessary information.</p>
 
 ## User Stories
 
-- As a user, I want to be able to view the card in detail
-- As a user, I want to be able to add a transaction to the transaction list
-- As a user, I want to be able to search for a list of transactions before a given date
-- As a user, I want to be able to add a new credit card to the collection
+- As a user, I want to be able to create a new credit card account and add it to a list of cards
+- As a user, I want to be able to select a credit card account and view the details (in main class?)
+- As a user, I want to be able to search for a list of credit card account that 
+have used more than a specific credit limit percentage
+
+- As a user, I want to be able to select a credit card account and 
+add a transaction to the transaction list of that card
+- As a user, I want to be able to select a credit card account and 
+search for a list of transactions before a given date of that card
+- As a user, I want to be able to select a credit card account and 
+update the balance of a credit card account

@@ -1,11 +1,12 @@
 package ui;
 
 
-import model.CreditCardAccount;
 import model.ToDoCards;
 
+import java.text.ParseException;
+
 public class Main {
-    public static void main(String[] args) {
-        new ToDoCards();
+    public static void main(String[] args) throws ParseException {
+        new CreditCardApp();
     }
 }

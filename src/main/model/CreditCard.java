@@ -1,17 +1,10 @@
 package model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-
-// Represents an credit card account having an account number, card number,
+// Represents a credit card account having an account number, card number,
 // name, address, phone number, credit limit (in dollars), balance (in dollars)
 // and a list of transactions (in dollars)
 
-public class CreditCardAccount {
+public class CreditCard {
     private static int nextAccountNo = 1;    // tracks number of next account created
     private int accountNo;                   // account number
     private String cardNo;                   // card number
@@ -23,11 +16,12 @@ public class CreditCardAccount {
                                              // positive representing the money owed to the bank and
                                              // negative representing the money saved in the credit card
 
-    private TransactionList transactions;  // the list of past transactions
+    private TransactionList transactionList;  // the list of past transactions
+
 
 
     /*
-     * REQUIRES: cardNumber consists of 16 digits, starting with 3761, no space;
+     * REQUIRES: cardNumber consists of 16 digits, no space allowed;
      *           phone is in form: (123) 4567890;
      *           initialCreditLimit >= 1000
      * EFFECTS: constructs a credit card account with account number, card number, card holder name,
@@ -41,8 +35,8 @@ public class CreditCardAccount {
      *          balance on credit card account is set to 0; transaction list is set to a empty list.
      */
 
-    public CreditCardAccount(String cardNumber, String cardHolderName, String cardHolderAddress,
-                             String phone, int initialCreditLimit) {
+    public CreditCard(String cardNumber, String cardHolderName, String cardHolderAddress,
+                      String phone, int initialCreditLimit) {
         this.accountNo = nextAccountNo++;
         this.cardNo = cardNumber;
         this.name = cardHolderName;
@@ -50,49 +44,61 @@ public class CreditCardAccount {
         this.phoneNo = phone;
         this.creditLimit = initialCreditLimit;
         this.balance = 0;
-        this.transactions = new TransactionList();
+        this.transactionList = new TransactionList();
     }
 
-    // getters
+    // EFFECTS: returns the account number of the credit card
     public int getAccountNo() {
         return accountNo;
     }
 
+    // EFFECTS: returns the credit card number
+    public String getCreditCardNo() {
+        return cardNo;
+    }
+
+    // EFFECTS: returns the card holder name of the credit card
     public String getName() {
         return name;
     }
 
+    // EFFECTS: returns the card holder address
+    public String getAddress() {
+        return address;
+    }
+
+    // EFFECTS: returns card holder phone number
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    // EFFECTS: returns the balance of the credit card
     public double getBalance() {
         return balance;
     }
 
+    // EFFECTS: returns the credit of the credit card
     public double getCreditLimit() {
         return creditLimit;
     }
 
-    public TransactionList getTransactions() {
-        return transactions;
+    // EFFECTS: returns the transaction list of the credit card
+    public TransactionList getTransactionList() {
+        return transactionList;
     }
 
-
-
-
-
-
-    /*  MODIFIES: this
-     * EFFECTS: amount is deducted from balance and updated
-     * 			balance is returned
-     */
+    // MODIFIES: this
+    // EFFECTS: amount is added to balance and updated balance is returned
     public double updateBalance(Transaction transaction) {
         balance = balance + transaction.getAmount();
         return balance;
     }
 
-
-
-
-
-
+    // MODIFIES: this
+    // EFFECTS: adds a transaction to the credit card transaction list
+    public void addTransactionToCard(Transaction transaction) {
+        transactionList.insertTransactionToTransactionList(transaction);
+    }
 }
 
 
