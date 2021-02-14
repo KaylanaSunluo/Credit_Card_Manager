@@ -38,7 +38,8 @@ public class Transaction {
 
 
     // REQUIRES: given date is in the form "yyyy/MM/dd"
-    // EFFECTS: returns true if the transaction happens before the given date
+    // EFFECTS: returns true if the transaction happens before the given date,
+    //          false otherwise
     public boolean beforeDate(String givenDate) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date1 = sdf.parse(date);

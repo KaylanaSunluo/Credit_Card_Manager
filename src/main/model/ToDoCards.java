@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+//represents a list of cards remaining to be managed
 public class ToDoCards {
     List<CreditCard> cardList;
 
@@ -11,7 +12,6 @@ public class ToDoCards {
     public ToDoCards() {
         cardList = new LinkedList<>();
     }
-
 
     // MODIFIES: this
     // EFFECTS: adds a credit card to the card list
@@ -25,38 +25,13 @@ public class ToDoCards {
     }
 
     // EFFECTS: returns the length of credit card list
-    public int cardsListLength() {
+    public int cardListLength() {
         return cardList.size();
     }
 
-
-    // REQUIRES: 0 < creditLimitPercent <= 1
-    // EFFECTS: returns a list of credit card accounts that have used more than
-    //          given percent of credit limit
-//    public List<CreditCard> lowCreditLeft(double creditLimitPercent) {
-//        List<CreditCard> cardsSoFar = new ArrayList<>();
-//
-//        for (CreditCard eachCard : cardList) {
-//            if (eachCard.getBalance() >= creditLimitPercent * eachCard.getCreditLimit()) {
-//                cardsSoFar.add(eachCard);
-//            }
-//        }
-//        return cardsSoFar;
-//    }
 }
 
-//    public boolean findCard(int accountNo) {
-//        int count = 1;
-//        for (CreditCard eachCard : cardsList) {
-//            if (eachCard.getAccountNo() == accountNo) {
-//                count++;
-//                return eachCard
-//
-//            } else if (count >= cardsList.cardsNum()) {
-//                System.out.println("No such card exists!\n");
-//            }
-//        }
-//    }
+
 
 
 

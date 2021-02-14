@@ -1,8 +1,8 @@
 package model;
 
-// Represents a credit card account having an account number, card number,
-// name, address, phone number, credit limit (in dollars), balance (in dollars)
-// and a list of transactions (in dollars)
+// Represents a credit card account having an account number, card number, card holder
+// name, address, phone number, credit limit (in dollars), balance (in dollars) and
+// a list of transactions (in dollars)
 
 public class CreditCard {
     private static int nextAccountNo = 1;    // tracks number of next account created
@@ -21,7 +21,7 @@ public class CreditCard {
 
 
     /*
-     * REQUIRES: cardNumber consists of 16 digits, no space allowed;
+     * REQUIRES: cardNumber consists of 16 digits, with the format "0000 0000 0000 0000";
      *           phone is in form: (123) 4567890;
      *           initialCreditLimit >= 1000
      * EFFECTS: constructs a credit card account with account number, card number, card holder name,
@@ -88,7 +88,7 @@ public class CreditCard {
     }
 
     // MODIFIES: this
-    // EFFECTS: amount is added to balance and updated balance is returned
+    // EFFECTS: adds amount to balance and returns the updated balance
     public double updateBalance(Transaction transaction) {
         balance = balance + transaction.getAmount();
         return balance;

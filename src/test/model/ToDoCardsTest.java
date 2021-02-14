@@ -30,7 +30,6 @@ public class ToDoCardsTest {
         t1 = new Transaction("2015-12-23",499);
 
         cardList = new ToDoCards();
-
     }
 
     @Test
@@ -58,62 +57,8 @@ public class ToDoCardsTest {
         cardList.addCard(c1);
         cardList.addCard(c2);
         cardList.addCard(c3);
-        assertEquals(3,cardList.cardsListLength());
+        assertEquals(3,cardList.cardListLength());
 
     }
-
-//    @Test
-//    public void testLowCreditLeft() {
-//        c1.updateBalance(t1);
-//
-//        cardList.addCard(c1);
-//        cardList.addCard(c2);
-//        cardList.addCard(c3);
-//
-//
-//
-//        List<CreditCard> resultCardList = cardList.lowCreditLeft(0.5);
-//        List<CreditCard> expectedCardList = new ArrayList<>();
-////        expectedCardList.add(c1);
-//
-//        assertEquals(2,resultCardList.size());
-//
-////        assertEquals(expectedCardList,cardList.lowCreditLeft(0.5));
-//
-//    }
-
-
-
-
-
-
-//    @Test
-//    public void testFindCardExists() {
-//        cardsList1.addCard(c1);
-//        cardsList1.addCard(c2);
-//
-//        assertTrue(cardsList1.findCard("1234 1234 4321 4321"));
-//    }
-//    @Test
-//    public void testFindCardNotExists() {
-//        cardsList1.addCard(c1);
-//        cardsList1.addCard(c2);
-//
-//        assertFalse(cardsList1.findCard("1234 1234 4321 4111"));
-//    }
-
-
-
-//    @Test
-//    public void testAddCard() {
-//        cardsList1.addCard(c1);
-//        cardsList1.addCard(c2);
-//        assertEquals(2,cardsList1.);
-//
-//    }
-//    @Test
-//    public void testlowCreditLeft
-
-
 
 }

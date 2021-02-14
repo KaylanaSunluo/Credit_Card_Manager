@@ -118,7 +118,7 @@ public class CreditCardApp {
                 showCardDetails(eachCard);
                 count++;
 
-            } else if (count >= cardList.cardsListLength()) {
+            } else if (count >= cardList.cardListLength()) {
                 System.out.println("No such card exists!\n");
                 System.out.println();
             }
@@ -126,7 +126,7 @@ public class CreditCardApp {
     }
 
 
-   // EFFECTS:
+   // EFFECTS: show the details of the credit card
     private void showCardDetails(CreditCard card) {
         System.out.println();
         System.out.println("Card details are showing below:");
@@ -145,22 +145,25 @@ public class CreditCardApp {
 
 
     private void doAddCard() {
-        System.out.println("Enter card number(16 digits with no space): ");
-        String cardNo = input.next();
+        System.out.print("Enter card number (16 digits with spaces): ");
+        String cardNo = input.nextLine();
+        cardNo += input.nextLine();
         System.out.print("Enter card holder name: ");
-        String cardHolderName = input.next();
+        String cardHolderName = input.nextLine();
         System.out.print("Enter address: ");
-        String address = input.next();
+        String address = input.nextLine();
         System.out.print("Enter phone number: ");
-        String phone = input.next();
+        String phone = input.nextLine();
         System.out.print("Enter initial credit limit: $");
         int creditLimit = input.nextInt();
+        System.out.println();
 
+        System.out.print("The new card is set up successfully.");
         CreditCard newCard = new CreditCard(cardNo,cardHolderName,address,phone,creditLimit);
         cardList.addCard(newCard);
         showCardDetails(newCard);
 
-        System.out.print("The new card is set up successfully.");
+
         System.out.println();
 
     }
@@ -215,12 +218,11 @@ public class CreditCardApp {
                 showCardDetails(eachCard);
                 count++;
 
-            } else if (count == cardList.cardsListLength()) {
+            } else if (count == cardList.cardListLength()) {
                 System.out.println("No such card exists!\n");
                 System.out.println();
             }
         }
-        System.out.println("End.");
         System.out.println();
     }
 
