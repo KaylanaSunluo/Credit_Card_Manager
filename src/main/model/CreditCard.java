@@ -4,7 +4,11 @@ package model;
 // name, address, phone number, credit limit (in dollars), balance (in dollars) and
 // a list of transactions (in dollars)
 
-public class CreditCard {
+import org.json.JSONObject;
+import persistence.Writable;
+
+public class CreditCard implements Writable {
+    private static int initial = 1;
     private static int nextAccountNo = 1;    // tracks number of next account created
     private int accountNo;                   // account number
     private String cardNo;                   // card number
@@ -99,6 +103,36 @@ public class CreditCard {
     public void addTransactionToCard(Transaction transaction) {
         transactionList.insertTransactionToTransactionList(transaction);
     }
+
+    //REQUIRES: newAccountNo > 0
+    //MODIFIES: this
+    //EFFECTS: changes the account number to the new number
+    public void changeAccountNo(int newAccountNo) {
+        this.accountNo = newAccountNo;
+    }
+
+    //REQUIRES: newBalance > 0
+    //MODIFIES: this
+    //EFFECTS: changes the balance to the given new balance
+    public void changeBalance(double newBalance) {
+        this.balance = newBalance;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+
+        json.put("accountNo", initial++);
+        json.put("cardNo", cardNo);
+        json.put("cardHolderName", name);
+        json.put("address", address);
+        json.put("phoneNo", phoneNo);
+        json.put("creditLimit", creditLimit);
+        json.put("balance", balance);
+
+        return json;
+    }
+
 }
 
 

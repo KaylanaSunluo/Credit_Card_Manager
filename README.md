@@ -32,3 +32,5 @@ add a transaction to the transaction list of that card, updating the balance at 
 - As a user, I want to be able to select a credit card account and 
 search for a list of transactions before a given date of that card
 
+-As a user, I want to be able to save my credit card list to file
+-As a user, I want to be able to be able to load my credit card list from file 
