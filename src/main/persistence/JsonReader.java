@@ -12,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-// Represents a reader that reads workroom from JSON data stored in file
+// Represents a reader that reads to-do-cards from JSON data stored in file
 public class JsonReader {
     private String source;
 
@@ -21,7 +21,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads to-do-cards from file and returns it;
     // throws IOException if an error occurs reading data from file
     public ToDoCards read() throws IOException {
         String jsonData = readFile(source);
@@ -36,19 +36,18 @@ public class JsonReader {
         try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
             stream.forEach(s -> contentBuilder.append(s));
         }
-
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses workroom from JSON object and returns it
+    // EFFECTS: parses to-do-cards from JSON object and returns it
     private ToDoCards parseToDoCards(JSONObject jsonObject) {
         ToDoCards cardList = new ToDoCards();
         addCards(cardList, jsonObject);
         return cardList;
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingies from JSON object and adds them to workroom
+    // MODIFIES: cardList
+    // EFFECTS: parses cards from JSON object and adds them to to-do-cards
     private void addCards(ToDoCards cardList, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("creditCardList");
         for (Object json : jsonArray) {
@@ -57,8 +56,8 @@ public class JsonReader {
         }
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
+    // MODIFIES: cardList
+    // EFFECTS: parses card from JSON object and adds it to to-do-cards
     private void addCreditCard(ToDoCards cardList, JSONObject jsonObject) {
         int accountNo = jsonObject.getInt("accountNo");
         String cardNo = jsonObject.getString("cardNo");
