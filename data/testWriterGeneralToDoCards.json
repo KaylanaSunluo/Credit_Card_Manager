@@ -1,0 +1,20 @@
+{"creditCardList": [
+    {
+        "address": "2205 Lower Mall, Vancouver",
+        "balance": 0,
+        "cardHolderName": "KF",
+        "accountNo": 1,
+        "creditLimit": 500,
+        "cardNo": "1111 2222 3333 4444",
+        "phoneNo": "(778)1231123"
+    },
+    {
+        "address": "1002 Happy Garden, Vancouver",
+        "balance": 0,
+        "cardHolderName": "JL",
+        "accountNo": 2,
+        "creditLimit": 3000,
+        "cardNo": "2222 3333 4444 5555",
+        "phoneNo": "(778)9871153"
+    }
+]}

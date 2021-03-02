@@ -1,15 +1,24 @@
 package ui;
 
+
 import model.CreditCard;
 import model.ToDoCards;
 import model.Transaction;
 import model.TransactionList;
+
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import java.text.ParseException;
 import java.util.List;
 import java.util.Scanner;
 
 public class CreditCardApp {
+    private static final String JSON_STORE = "./data/accounts.txt";
     private CreditCard card1;
     private CreditCard card2;
     private CreditCard card3;
@@ -17,10 +26,16 @@ public class CreditCardApp {
     private ToDoCards cardList;
 
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
 
     // EFFECTS: runs the credit application
-    public CreditCardApp() throws ParseException {
+    public CreditCardApp() throws FileNotFoundException, ParseException {
+        input = new Scanner(System.in);
+        cardList = new ToDoCards();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runCreditCardApp();
     }
 
@@ -57,8 +72,12 @@ public class CreditCardApp {
             doAddCard();
         } else if (command.equals("t")) {
             doAddTransaction();
-        } else if (command.equals("s")) {
+        } else if (command.equals("d")) {
             doSearchTransactionsBeforeGivenDate();
+        } else if (command.equals("s")) {
+            saveToDoCards();
+        } else if (command.equals("l")) {
+            loadToDoCards();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -103,7 +122,9 @@ public class CreditCardApp {
         System.out.println("\tf -> find a credit card");
         System.out.println("\ta -> add a new credit card");
         System.out.println("\tt -> add a transaction to a credit card");
-        System.out.println("\ts -> search for transactions before given date");
+        System.out.println("\td -> search for transactions before given date");
+        System.out.println("\ts -> save card list to file");
+        System.out.println("\tl -> load card list from file");
         System.out.println("\tq -> quit");
     }
 
@@ -203,11 +224,6 @@ public class CreditCardApp {
     }
 
 
-
-
-
-
-
     public void findTargetCard() {
         System.out.print("Enter account No.: ");
         int accountNo = input.nextInt();
@@ -234,6 +250,30 @@ public class CreditCardApp {
                     + eachTransaction.getAmount() + ";");
         }
         System.out.println();
+    }
+
+
+    private void saveToDoCards() {
+        try {
+//            JsonWriter writer = new JsonWriter(JSON_STORE);
+            jsonWriter.open();
+            jsonWriter.write(cardList);
+            jsonWriter.close();
+            System.out.println("Saved to" + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to save to " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadToDoCards() {
+        try {
+            cardList = jsonReader.read();
+            System.out.println("Loaded from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 
 }
