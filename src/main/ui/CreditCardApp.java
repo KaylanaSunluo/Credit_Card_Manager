@@ -91,7 +91,10 @@ public class CreditCardApp {
         String date = input.next();
 
         TransactionList targetCardTransactionList = targetCard.getTransactionList();
-        List<Transaction> resultCardTransactionList = targetCardTransactionList.transactionListBeforeGivenDate(date);
+        List<Transaction> resultCardTransactionList = null;
+
+        resultCardTransactionList = targetCardTransactionList.transactionListBeforeGivenDate(date);
+
         System.out.println("Transaction records result is showing below:");
         printTransactionList(resultCardTransactionList);
 
@@ -252,10 +255,9 @@ public class CreditCardApp {
         System.out.println();
     }
 
-
+    // EFFECTS: save to-do cards to file
     private void saveToDoCards() {
         try {
-//            JsonWriter writer = new JsonWriter(JSON_STORE);
             jsonWriter.open();
             jsonWriter.write(cardList);
             jsonWriter.close();
@@ -266,7 +268,7 @@ public class CreditCardApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads workroom from file
+    // EFFECTS: loads to-do cards from file
     private void loadToDoCards() {
         try {
             cardList = jsonReader.read();

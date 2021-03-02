@@ -8,7 +8,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-// Represents a writer that writes JSON representation of credit cards to file
+/* Represents a writer that writes JSON representation of to-do cards to file
+ * Citation: Code obtained from JsonSerializationDemo
+ * Retrieved from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+ */
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
@@ -27,7 +30,7 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of to-do cards to file
     public void write(ToDoCards cardList) {
         JSONObject json = cardList.toJson();
         saveToFile(json.toString(TAB));

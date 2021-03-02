@@ -41,7 +41,7 @@ public class ToDoCards implements Writable {
         return json;
     }
 
-    // EFFECTS: returns things in this workroom as a JSON array
+    // EFFECTS: returns things in this to-do cards as a JSON array
     private JSONArray cardListToJson() {
         JSONArray jsonArray = new JSONArray();
 

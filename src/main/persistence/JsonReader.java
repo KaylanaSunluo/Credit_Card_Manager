@@ -12,7 +12,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-// Represents a reader that reads to-do-cards from JSON data stored in file
+/* Represents a reader that reads to-do cards from JSON data stored in file
+ * Citation: Code obtained from JsonSerializationDemo
+ * Retrieved from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+ */
+
 public class JsonReader {
     private String source;
 
@@ -21,7 +25,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads to-do-cards from file and returns it;
+    // EFFECTS: reads to-do cards from file and returns it;
     // throws IOException if an error occurs reading data from file
     public ToDoCards read() throws IOException {
         String jsonData = readFile(source);
@@ -39,7 +43,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses to-do-cards from JSON object and returns it
+    // EFFECTS: parses to-do cards from JSON object and returns it
     private ToDoCards parseToDoCards(JSONObject jsonObject) {
         ToDoCards cardList = new ToDoCards();
         addCards(cardList, jsonObject);
@@ -47,7 +51,7 @@ public class JsonReader {
     }
 
     // MODIFIES: cardList
-    // EFFECTS: parses cards from JSON object and adds them to to-do-cards
+    // EFFECTS: parses cards from JSON object and adds them to to-do cards
     private void addCards(ToDoCards cardList, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("creditCardList");
         for (Object json : jsonArray) {
@@ -57,7 +61,7 @@ public class JsonReader {
     }
 
     // MODIFIES: cardList
-    // EFFECTS: parses card from JSON object and adds it to to-do-cards
+    // EFFECTS: parses card from JSON object and adds it to to-do cards
     private void addCreditCard(ToDoCards cardList, JSONObject jsonObject) {
         int accountNo = jsonObject.getInt("accountNo");
         String cardNo = jsonObject.getString("cardNo");
