@@ -3,6 +3,7 @@ package persistence;
 
 import model.CreditCard;
 import model.ToDoCards;
+import model.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,15 +17,19 @@ public class JsonWriterTest extends JsonTest {
 
     private CreditCard c1;
     private CreditCard c2;
+    private Transaction t1;
 
 
     @BeforeEach
     public void setup() {
         c1 = new CreditCard("1111 2222 3333 4444", "KF",
                 "2205 Lower Mall, Vancouver", "(778)1231123", 500);
+        t1 = new Transaction("2020-02-02",200);
+
         c2 = new CreditCard("2222 3333 4444 5555", "JL",
                 "1002 Happy Garden, Vancouver", "(778)9871153", 3000);
     }
+
 
     @Test
     void testWriterInvalidFile() {
@@ -57,6 +62,7 @@ public class JsonWriterTest extends JsonTest {
 
     @Test
     void testWriterGeneralToDoCards() {
+        c1.addTransactionToCard(t1);
         try {
             ToDoCards cardList = new ToDoCards();
             cardList.addCard(c1);

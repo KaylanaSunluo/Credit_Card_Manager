@@ -34,10 +34,7 @@ public class JsonWriter {
     // MODIFIES: this
     // EFFECTS: writes JSON representation of to-do cards to file
     public void write(ToDoCards cardList) {
-        for (CreditCard c: cardList.getCreditCardsList()) {
-            TransactionList list = c.getTransactionList();
-            list.toJson();
-        }
+
         JSONObject json = cardList.toJson();
         saveToFile(json.toString(TAB));
     }

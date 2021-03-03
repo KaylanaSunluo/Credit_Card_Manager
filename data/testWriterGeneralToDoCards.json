@@ -5,8 +5,11 @@
         "cardHolderName": "KF",
         "accountNo": 1,
         "creditLimit": 500,
-        "CCtransactionList": [{}],
         "cardNo": "1111 2222 3333 4444",
+        "cardTransactionList": [{"cardTransactionList": [{
+            "date": "2020-02-02",
+            "amount": 200
+        }]}],
         "phoneNo": "(778)1231123"
     },
     {
@@ -15,8 +18,8 @@
         "cardHolderName": "JL",
         "accountNo": 2,
         "creditLimit": 3000,
-        "CCtransactionList": [{}],
         "cardNo": "2222 3333 4444 5555",
+        "cardTransactionList": [{}],
         "phoneNo": "(778)9871153"
     }
 ]}
