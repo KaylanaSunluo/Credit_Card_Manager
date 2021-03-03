@@ -69,7 +69,7 @@ public class TransactionList implements Writable {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         for (Transaction t: transactionList) {
-            json.append("cardTransactionList", t.toJson());
+            json.append("transactionList", t.toJson());
         }
         return json;
     }

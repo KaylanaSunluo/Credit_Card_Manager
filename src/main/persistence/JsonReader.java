@@ -75,17 +75,14 @@ public class JsonReader {
         double balance = jsonObject.getDouble("balance");
 
 
-        JSONObject transactionObject = jsonObject.getJSONObject("cardTransactionList");
-        TransactionList transactionList = parseTransactionList(transactionObject);
-//
-//        for (Object t: transactionArray) {
-//            Transaction transaction = jsonObject.get()
-//        }
+        Object cardTransactionList = jsonObject.get("cardTransactionList");
+        Object transactionList = jsonObject.get("transactionList");
+
 
         CreditCard card = new CreditCard(cardNo, cardHolderName, address, phoneNo, creditLimit);
         card.changeAccountNo(accountNo);
         card.changeBalance(balance);
-        card.changeTransactionList(transactionList);
+        card.changeTransactionList(parseTransactionList((JSONObject) cardTransactionList));
 
 
         cardList.addCard(card);
@@ -107,7 +104,7 @@ public class JsonReader {
     // MODIFIES: cardList
     // EFFECTS: parses cards from JSON object and adds them to to-do cards
     private void addTransactions(TransactionList transactionList, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("creditCardList");
+        JSONArray jsonArray = jsonObject.getJSONArray("transactionList");
         for (Object json : jsonArray) {
             JSONObject nextTransaction = (JSONObject) json;
             addTransaction(transactionList, nextTransaction);

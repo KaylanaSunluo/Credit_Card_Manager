@@ -63,6 +63,7 @@ public class JsonWriterTest extends JsonTest {
     @Test
     void testWriterGeneralToDoCards() {
         c1.addTransactionToCard(t1);
+        c1.addTransactionToCard(t1);
         try {
             ToDoCards cardList = new ToDoCards();
             cardList.addCard(c1);

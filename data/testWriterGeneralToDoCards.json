@@ -6,10 +6,16 @@
         "accountNo": 1,
         "creditLimit": 500,
         "cardNo": "1111 2222 3333 4444",
-        "cardTransactionList": [{"cardTransactionList": [{
-            "date": "2020-02-02",
-            "amount": 200
-        }]}],
+        "cardTransactionList": [{"transactionList": [
+            {
+                "date": "2020-02-02",
+                "amount": 200
+            },
+            {
+                "date": "2020-02-02",
+                "amount": 200
+            }
+        ]}],
         "phoneNo": "(778)1231123"
     },
     {
