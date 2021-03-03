@@ -118,6 +118,10 @@ public class CreditCard implements Writable {
         this.balance = newBalance;
     }
 
+    public void changeTransactionList(TransactionList transactionList) {
+        this.transactionList = transactionList;
+    }
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -129,6 +133,8 @@ public class CreditCard implements Writable {
         json.put("phoneNo", phoneNo);
         json.put("creditLimit", creditLimit);
         json.put("balance", balance);
+
+        json.append("CCtransactionList",transactionList.toJson());
 
         return json;
     }

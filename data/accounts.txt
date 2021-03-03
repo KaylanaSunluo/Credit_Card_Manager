@@ -3,17 +3,22 @@
         "address": "2205 Lower Mall, Vancouver",
         "balance": 0,
         "cardHolderName": "Kay Sun",
-        "accountNo": 5,
+        "accountNo": 1,
         "creditLimit": 500,
+        "CCtransactionList": {"transactionList": []},
         "cardNo": "1234 1234 4321 4321",
         "phoneNo": "(778)1231123"
     },
     {
         "address": "1002 Happy Garden, Vancouver",
-        "balance": 0,
+        "balance": 2000,
         "cardHolderName": "Janice Lee",
-        "accountNo": 6,
+        "accountNo": 2,
         "creditLimit": 3000,
+        "CCtransactionList": {"transactionList": [{
+            "date": "2020-01-01",
+            "amount": 2000
+        }]},
         "cardNo": "1231 3131 4342 1235",
         "phoneNo": "(778)9871153"
     },
@@ -21,18 +26,10 @@
         "address": "1188 Agronomy Road, Vancouver",
         "balance": 0,
         "cardHolderName": "Tom Lu",
-        "accountNo": 7,
+        "accountNo": 3,
         "creditLimit": 10000,
+        "CCtransactionList": {"transactionList": []},
         "cardNo": "1783 3299 4992 9915",
         "phoneNo": "(778)1133222"
-    },
-    {
-        "address": "123",
-        "balance": 12,
-        "cardHolderName": "123",
-        "accountNo": 8,
-        "creditLimit": 123,
-        "cardNo": "123",
-        "phoneNo": "123"
     }
 ]}

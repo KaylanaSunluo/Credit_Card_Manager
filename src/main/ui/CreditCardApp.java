@@ -7,7 +7,9 @@ import model.Transaction;
 import model.TransactionList;
 
 import persistence.JsonReader;
+import persistence.JsonReaderTransactionList;
 import persistence.JsonWriter;
+import persistence.JsonWriterTransactionList;
 
 
 import java.io.FileNotFoundException;
@@ -24,10 +26,14 @@ public class CreditCardApp {
     private CreditCard card3;
     private CreditCard targetCard;
     private ToDoCards cardList;
+    private TransactionList transactionList;
 
     private Scanner input;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+
+    private JsonWriterTransactionList jsonWriterTransactionList;
+    private JsonReaderTransactionList jsonReaderTransactionList;
 
 
     // EFFECTS: runs the credit application
@@ -76,6 +82,7 @@ public class CreditCardApp {
             doSearchTransactionsBeforeGivenDate();
         } else if (command.equals("s")) {
             saveToDoCards();
+            saveTransactionList();
         } else if (command.equals("l")) {
             loadToDoCards();
         } else {
@@ -267,15 +274,43 @@ public class CreditCardApp {
         }
     }
 
+    private void saveTransactionList() {
+        for (CreditCard c : cardList.getCreditCardsList()) {
+            try {
+                jsonWriterTransactionList.open();
+                jsonWriterTransactionList.write(c.getTransactionList());
+                jsonWriter.close();
+            } catch (FileNotFoundException e) {
+                System.out.println("Unable to save to " + JSON_STORE);
+            }
+        }
+    }
+
     // MODIFIES: this
     // EFFECTS: loads to-do cards from file
     private void loadToDoCards() {
+//        for (CreditCard c: cardList)
         try {
             cardList = jsonReader.read();
+            TransactionList transactionList = jsonReaderTransactionList.read();
+            for (CreditCard c: cardList.getCreditCardsList()) {
+                c.changeTransactionList(transactionList);
+            }
             System.out.println("Loaded from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
+
+//    private void loadTransactionList() {
+//
+//        try {
+//            TransactionList = jsonReaderTransactionList.read();
+//            System.out.println("Loaded from " + JSON_STORE);
+//        } catch (IOException e) {
+//            System.out.println("Unable to read from file: " + JSON_STORE);
+//        }
+//    }
+//    }
 
 }

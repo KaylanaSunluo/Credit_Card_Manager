@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,7 +13,7 @@ import java.util.Date;
 // The amount can be positive meaning the total amount of money owed to the bank,
 // and negative representing the money pay the credit card
 
-public class Transaction {
+public class Transaction implements Writable {
     private String date;
     private double amount;
 
@@ -46,6 +49,17 @@ public class Transaction {
         Date date2 = sdf.parse(givenDate);
         return date1.before(date2);
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+
+        json.put("date", date);
+        json.put("amount", amount);
+
+        return json;
+    }
+
 
 }
 

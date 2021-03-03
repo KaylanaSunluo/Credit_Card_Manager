@@ -1,5 +1,10 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
+import java.nio.file.Watchable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,7 +14,7 @@ import java.util.List;
 
 
 // represents a list of transactions happened so far
-public class TransactionList {
+public class TransactionList implements Writable {
 
     private Transaction transaction;
     private List<Transaction> transactionList;
@@ -58,5 +63,31 @@ public class TransactionList {
         }
         return transactionListResult;
     }
+
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        for (Transaction t: transactionList) {
+            json.append("transaction", t.toJson());
+        }
+        return json;
+    }
+
+
+//    public JSONObject toJson() {
+//        JSONObject json = new JSONObject();
+//        json.put("transactionList", transactionListToJson());
+//        return json;
+//    }
+
+    // EFFECTS: returns things in this to-do cards as a JSON array
+//    private JSONArray transactionListToJson() {
+//        JSONArray jsonArray = new JSONArray();
+//        for (Transaction t : transactionList) {
+//            jsonArray.put(t.toJson());
+//        }
+//        return jsonArray;
+//    }
 
 }

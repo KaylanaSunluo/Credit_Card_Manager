@@ -1,7 +1,5 @@
 package persistence;
 
-
-import model.CreditCard;
 import model.ToDoCards;
 import model.TransactionList;
 import org.json.JSONObject;
@@ -10,17 +8,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-/* Represents a writer that writes JSON representation of to-do cards to file
- * Citation: Code obtained from JsonSerializationDemo
- * Retrieved from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
- */
-public class JsonWriter {
+public class JsonWriterTransactionList {
     private static final int TAB = 4;
     private PrintWriter writer;
     private String destination;
 
     // EFFECTS: constructs writer to write to destination file
-    public JsonWriter(String destination) {
+    public JsonWriterTransactionList(String destination) {
         this.destination = destination;
     }
 
@@ -33,12 +27,8 @@ public class JsonWriter {
 
     // MODIFIES: this
     // EFFECTS: writes JSON representation of to-do cards to file
-    public void write(ToDoCards cardList) {
-        for (CreditCard c: cardList.getCreditCardsList()) {
-            TransactionList list = c.getTransactionList();
-            list.toJson();
-        }
-        JSONObject json = cardList.toJson();
+    public void write(TransactionList transactionList) {
+        JSONObject json = transactionList.toJson();
         saveToFile(json.toString(TAB));
     }
 
@@ -53,5 +43,4 @@ public class JsonWriter {
     private void saveToFile(String json) {
         writer.print(json);
     }
-
 }

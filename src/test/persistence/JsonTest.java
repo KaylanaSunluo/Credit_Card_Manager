@@ -3,6 +3,7 @@ package persistence;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import model.CreditCard;
+import model.Transaction;
 
 
 public class JsonTest {
@@ -16,5 +17,10 @@ public class JsonTest {
         assertEquals(creditLimit, card.getCreditLimit());
         assertEquals(balance, card.getBalance());
 
+    }
+
+    protected void checkTransaction (Transaction transaction, String date, double amount) {
+        assertEquals(transaction.getDate(),date);
+        assertEquals(transaction.getAmount(),amount);
     }
 }
