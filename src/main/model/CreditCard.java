@@ -4,7 +4,6 @@ package model;
 // name, address, phone number, credit limit (in dollars), balance (in dollars) and
 // a list of transactions (in dollars)
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 

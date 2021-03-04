@@ -1,9 +1,7 @@
 package persistence;
 
 
-import model.CreditCard;
 import model.ToDoCards;
-import model.TransactionList;
 import org.json.JSONObject;
 
 import java.io.File;

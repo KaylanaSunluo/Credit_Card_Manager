@@ -8,13 +8,12 @@ import model.TransactionList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import sun.lwawt.macosx.CTextPipe;
+
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.jar.JarException;
 import java.util.stream.Stream;
 
 /* Represents a reader that reads to-do cards from JSON data stored in file

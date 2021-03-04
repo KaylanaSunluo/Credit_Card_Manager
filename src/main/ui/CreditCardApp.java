@@ -24,7 +24,6 @@ public class CreditCardApp {
     private CreditCard card3;
     private CreditCard targetCard;
     private ToDoCards cardList;
-    private TransactionList transactionList;
 
     private Scanner input;
     private JsonWriter jsonWriter;
@@ -78,7 +77,6 @@ public class CreditCardApp {
             doSearchTransactionsBeforeGivenDate();
         } else if (command.equals("s")) {
             saveToDoCards();
-//            saveTransactionList();
         } else if (command.equals("l")) {
             loadToDoCards();
         } else {
@@ -86,7 +84,7 @@ public class CreditCardApp {
         }
     }
 
-
+    // EFFECTS: prints the transaction list with transactions before given date
     private void doSearchTransactionsBeforeGivenDate() throws ParseException {
         findTargetCard();
 
@@ -100,8 +98,6 @@ public class CreditCardApp {
 
         System.out.println("Transaction records result is showing below:");
         printTransactionList(resultCardTransactionList);
-
-
     }
 
 
@@ -134,7 +130,6 @@ public class CreditCardApp {
         System.out.println("\tq -> quit");
     }
 
-    // MODIFIES: this
     // EFFECTS: conducts a deposit transaction
     private void doFindCard() {
         System.out.print("Enter account No.: ");
@@ -168,9 +163,8 @@ public class CreditCardApp {
     }
 
 
-
-
-
+    // MODIFIES: this
+    // EFFECTS: adds a new credit card
     private void doAddCard() {
         System.out.print("Enter card number (16 digits with spaces): ");
         String cardNo = input.nextLine();
@@ -196,7 +190,7 @@ public class CreditCardApp {
     }
 
 
-
+    // MODIFIES: this
     // EFFECTS: adds a transaction to the transaction list of a credit card
     private void doAddTransaction() {
         findTargetCard();
@@ -205,12 +199,13 @@ public class CreditCardApp {
         System.out.print("Enter transaction amount (with negative meaning paying credit card): ");
         double amount = input.nextDouble();
 
-
         Transaction newTransaction = new Transaction(date,amount);
         doUpdateTransactionList(targetCard,newTransaction);
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: adds a new transaction to the credit card's transaction list if the card has enough credit limit,
+    //          prints a message otherwise
     public void doUpdateTransactionList(CreditCard targetCard, Transaction newTransaction) {
         if (targetCard.getBalance() + newTransaction.getAmount() <= targetCard.getCreditLimit()) {
             targetCard.addTransactionToCard(newTransaction);
@@ -221,15 +216,14 @@ public class CreditCardApp {
             System.out.println("Transaction records of AccountNo." + targetCard.getAccountNo() + " are showing below:");
             printTransactionList(resultTransactionList);
             System.out.println("Balance now: $" + targetCard.getBalance());
-            System.out.println();
 
         } else {
             System.out.println("Not enough credit limit left!");
-            System.out.println();
         }
+        System.out.println();
     }
 
-
+    // EFFECTS: find the target credit card with given account number
     public void findTargetCard() {
         System.out.print("Enter account No.: ");
         int accountNo = input.nextInt();
@@ -248,9 +242,8 @@ public class CreditCardApp {
         System.out.println();
     }
 
+    // EFFECTS: prints the transaction list
     public void printTransactionList(List<Transaction> transactionList) {
-//        System.out.println();
-//        System.out.println("Transaction records are showing below:");
         for (Transaction eachTransaction: transactionList) {
             System.out.println("Date: " + eachTransaction.getDate() + "  Amount: $"
                     + eachTransaction.getAmount() + ";");
@@ -270,43 +263,14 @@ public class CreditCardApp {
         }
     }
 
-//    private void saveTransactionList() {
-//        for (CreditCard c : cardList.getCreditCardsList()) {
-//            try {
-//                jsonWriterTransactionList.open();
-//                jsonWriterTransactionList.write(c.getTransactionList());
-//                jsonWriter.close();
-//            } catch (FileNotFoundException e) {
-//                System.out.println("Unable to save to " + JSON_STORE);
-//            }
-//        }
-//    }
-
     // MODIFIES: this
     // EFFECTS: loads to-do cards from file
     private void loadToDoCards() {
-//        for (CreditCard c: cardList)
         try {
             cardList = jsonReader.read();
-//            TransactionList transactionList = jsonReaderTransactionList.read();
-//            for (CreditCard c: cardList.getCreditCardsList()) {
-//                c.changeTransactionList(transactionList);
-//            }
             System.out.println("Loaded from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
-
-//    private void loadTransactionList() {
-//
-//        try {
-//            TransactionList = jsonReaderTransactionList.read();
-//            System.out.println("Loaded from " + JSON_STORE);
-//        } catch (IOException e) {
-//            System.out.println("Unable to read from file: " + JSON_STORE);
-//        }
-//    }
-//    }
-
 }

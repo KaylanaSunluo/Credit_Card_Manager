@@ -7,7 +7,6 @@ import model.Transaction;
 import model.TransactionList;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class JsonTest {
