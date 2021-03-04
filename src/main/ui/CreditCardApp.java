@@ -139,15 +139,14 @@ public class CreditCardApp {
     private void doFindCard() {
         System.out.print("Enter account No.: ");
         int accountNo = input.nextInt();
-        int count = 1;
+        int count = 0;
         for (CreditCard eachCard : cardList.getCreditCardsList()) {
+            count++;
             if (eachCard.getAccountNo() == accountNo) {
                 showCardDetails(eachCard);
-                count++;
 
             } else if (count >= cardList.cardListLength()) {
-                System.out.println("No such card exists!\n");
-                System.out.println();
+                System.out.println("No such card exists!");
             }
         }
     }
