@@ -13,9 +13,13 @@ import persistence.JsonWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CreditCardApp {
     private static final String JSON_STORE = "./data/accounts.txt";
@@ -94,10 +98,18 @@ public class CreditCardApp {
         TransactionList targetCardTransactionList = targetCard.getTransactionList();
         List<Transaction> resultCardTransactionList = null;
 
-        resultCardTransactionList = targetCardTransactionList.transactionListBeforeGivenDate(date);
-
-        System.out.println("Transaction records result is showing below:");
-        printTransactionList(resultCardTransactionList);
+//        if (!isDateFormat(date)) {
+//            try {
+                resultCardTransactionList = targetCardTransactionList.transactionListBeforeGivenDate(date);
+//            } catch (ParseException e) {
+//                System.out.println("This should not happen!");
+//            }
+//            System.out.println("Date not valid!");
+//            System.out.println();
+//        } else {
+            System.out.println("Transaction records result is showing below:");
+            printTransactionList(resultCardTransactionList);
+//        }
     }
 
 
@@ -196,11 +208,14 @@ public class CreditCardApp {
         findTargetCard();
         System.out.print("Enter transaction date (yyyy-MM-dd): ");
         String date = input.next();
-        System.out.print("Enter transaction amount (with negative meaning paying credit card): ");
-        double amount = input.nextDouble();
-
-        Transaction newTransaction = new Transaction(date,amount);
-        doUpdateTransactionList(targetCard,newTransaction);
+        if (isDateFormat(date)) {
+            System.out.print("Enter transaction amount (with negative meaning paying credit card): ");
+            double amount = input.nextDouble();
+            Transaction newTransaction = new Transaction(date,amount);
+            doUpdateTransactionList(targetCard,newTransaction);
+        } else {
+            System.out.println("Date not valid!");
+        }
     }
 
     // MODIFIES: this
@@ -249,6 +264,14 @@ public class CreditCardApp {
                     + eachTransaction.getAmount() + ";");
         }
         System.out.println();
+    }
+
+    // EFFECTS: returns true if the string is in the date format "yyyy-mm-dd"
+    public boolean isDateFormat(String s) {
+        String date = "\\d{4}-\\d{2}-\\d{2}";
+        Pattern pattern = Pattern.compile(date);
+        Matcher m = pattern.matcher(s);
+        return m.matches();
     }
 
     // EFFECTS: save to-do cards to file

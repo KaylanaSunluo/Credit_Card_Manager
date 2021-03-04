@@ -10,7 +10,7 @@ import java.util.List;
 
 
 // represents a list of transactions happened so far
-public class TransactionList extends ArrayList implements Writable {
+public class TransactionList extends ArrayList {
 
     private List<Transaction> transactionList;
 
@@ -59,14 +59,13 @@ public class TransactionList extends ArrayList implements Writable {
         return transactionListResult;
     }
 
-
-    @Override
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        for (Transaction t: transactionList) {
-            json.append("transactionList", t.toJson());
-        }
-        return json;
-    }
+//    @Override
+//    public JSONObject toJson() {
+//        JSONObject json = new JSONObject();
+//        for (Transaction t: transactionList) {
+//            json.append("transactionList", t.toJson());
+//        }
+//        return json;
+//    }
 
 }

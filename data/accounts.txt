@@ -10,13 +10,19 @@
     },
     {
         "address": "1002 Happy Garden, Vancouver",
-        "balance": 900,
+        "balance": 1834,
         "cardHolderName": "Janice Lee",
         "accountNo": 2,
-        "transactionList": [{
-            "date": "2020-02-02",
-            "amount": 900
-        }],
+        "transactionList": [
+            {
+                "date": "2020-03-07",
+                "amount": 520
+            },
+            {
+                "date": "2021-03-07",
+                "amount": 1314
+            }
+        ],
         "creditLimit": 3000,
         "cardNo": "1231 3131 4342 1235",
         "phoneNo": "(778)9871153"
