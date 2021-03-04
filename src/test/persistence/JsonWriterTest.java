@@ -4,10 +4,12 @@ package persistence;
 import model.CreditCard;
 import model.ToDoCards;
 import model.Transaction;
+import model.TransactionList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -78,10 +80,20 @@ public class JsonWriterTest extends JsonTest {
 
             List<CreditCard> cards = cardList.getCreditCardsList();
             assertEquals(2, cards.size());
+
+
+            TransactionList transactionList = new TransactionList();
+            transactionList.insertTransactionToTransactionList(t1);
+            transactionList.insertTransactionToTransactionList(t1);
+
+
+
             checkCreditCard(cards.get(0),1,"1111 2222 3333 4444", "KF",
-                    "2205 Lower Mall, Vancouver", "(778)1231123", 500, 0);
-            checkCreditCard(cards.get(1),2,"2222 3333 4444 5555", "JL",
-                    "1002 Happy Garden, Vancouver", "(778)9871153", 3000,0);
+                    "2205 Lower Mall, Vancouver", "(778)1231123", 500,
+                    0,transactionList);
+            checkCreditCard(cards.get(1), 2, "2222 3333 4444 5555", "JL",
+                    "1002 Happy Garden, Vancouver", "(778)9871153", 3000, 0,
+                    new TransactionList());
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");

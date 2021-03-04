@@ -5,6 +5,15 @@
     "balance": 0,
     "cardHolderName": "JL",
     "accountNo": 1,
+    "transactionList": [
+      {
+        "date": "2020-02-02",
+        "amount": 200
+      },
+      {
+        "date": "2020-02-02",
+        "amount": 200
+      }],
     "creditLimit": 3000,
     "cardNo": "2222 3333 4444 5555",
     "phoneNo": "(778)9871153"

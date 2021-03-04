@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import java.io.PrintWriter;
 import java.nio.file.Watchable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,7 +15,7 @@ import java.util.List;
 
 
 // represents a list of transactions happened so far
-public class TransactionList implements Writable {
+public class TransactionList extends ArrayList implements Writable {
 
     private Transaction transaction;
     private List<Transaction> transactionList;
@@ -73,6 +74,8 @@ public class TransactionList implements Writable {
         }
         return json;
     }
+
+
 
 
 //    public JSONObject toJson() {

@@ -6,6 +6,7 @@ import model.ToDoCards;
 import model.Transaction;
 import model.TransactionList;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import sun.lwawt.macosx.CTextPipe;
 
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.jar.JarException;
 import java.util.stream.Stream;
 
 /* Represents a reader that reads to-do cards from JSON data stored in file
@@ -65,7 +67,7 @@ public class JsonReader {
 
     // MODIFIES: cardList
     // EFFECTS: parses card from JSON object and adds it to to-do cards
-    private void addCreditCard(ToDoCards cardList, JSONObject jsonObject) {
+    private void addCreditCard(ToDoCards cardList, JSONObject jsonObject) throws JSONException {
         int accountNo = jsonObject.getInt("accountNo");
         String cardNo = jsonObject.getString("cardNo");
         String cardHolderName = jsonObject.getString("cardHolderName");
@@ -74,17 +76,15 @@ public class JsonReader {
         int creditLimit = jsonObject.getInt("creditLimit");
         double balance = jsonObject.getDouble("balance");
 
-
-        Object cardTransactionList = jsonObject.get("cardTransactionList");
-        Object transactionList = jsonObject.get("transactionList");
-
-
         CreditCard card = new CreditCard(cardNo, cardHolderName, address, phoneNo, creditLimit);
         card.changeAccountNo(accountNo);
         card.changeBalance(balance);
-        card.changeTransactionList(parseTransactionList((JSONObject) cardTransactionList));
-
-
+        try {
+            TransactionList transactionList = parseTransactionList(jsonObject.getJSONArray("transactionList"));
+            card.changeTransactionList(transactionList);
+        } catch (JSONException e) {
+            //pass
+        }
         cardList.addCard(card);
 
     }
@@ -92,27 +92,27 @@ public class JsonReader {
 
 
 
-
-
-    // EFFECTS: parses to-do cards from JSON object and returns it
-    private TransactionList parseTransactionList(JSONObject jsonObject) {
+    // EFFECTS: parses transactionList from JSON object and returns it
+    private TransactionList parseTransactionList(JSONArray jsonArray) {
         TransactionList transactionList = new TransactionList();
-        addTransactions(transactionList, jsonObject);
+        addTransactions(transactionList, jsonArray);
         return transactionList;
     }
 
-    // MODIFIES: cardList
-    // EFFECTS: parses cards from JSON object and adds them to to-do cards
-    private void addTransactions(TransactionList transactionList, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("transactionList");
+    // MODIFIES: transactionList
+    // EFFECTS: parses transactions from JSON object and adds them to transactionList
+    private JSONArray addTransactions(TransactionList transactionList, JSONArray jsonArray) {
+
         for (Object json : jsonArray) {
             JSONObject nextTransaction = (JSONObject) json;
             addTransaction(transactionList, nextTransaction);
         }
+        return jsonArray;
+
     }
 
-    // MODIFIES: cardList
-    // EFFECTS: parses card from JSON object and adds it to to-do cards
+    // MODIFIES: transactionList
+    // EFFECTS: parses transaction from JSON object and adds it to transactionList
     private void addTransaction(TransactionList transactionList, JSONObject jsonObject) {
         String date = jsonObject.getString("date");
         double amount = jsonObject.getDouble("amount");

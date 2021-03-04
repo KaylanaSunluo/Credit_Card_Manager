@@ -4,8 +4,11 @@ package model;
 // name, address, phone number, credit limit (in dollars), balance (in dollars) and
 // a list of transactions (in dollars)
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
+
+import java.util.List;
 
 public class CreditCard implements Writable {
     private static int initial = 1;
@@ -17,8 +20,8 @@ public class CreditCard implements Writable {
     private String phoneNo;                  // the phone number of card holder
     private int creditLimit;                 // credit limit
     private double balance;                  // the current balance of the card account,with
-                                             // positive representing the money owed to the bank and
-                                             // negative representing the money saved in the credit card
+    // positive representing the money owed to the bank and
+    // negative representing the money saved in the credit card
 
     private TransactionList transactionList;  // the list of past transactions
 
@@ -134,10 +137,15 @@ public class CreditCard implements Writable {
         json.put("creditLimit", creditLimit);
         json.put("balance", balance);
 
-        json.append("cardTransactionList",transactionList.toJson());
-
+        List<Transaction> list = transactionList.getTransactionList();
+        if (list.size() != 0) {
+            for (Transaction t : transactionList.getTransactionList()) {
+                json.append("transactionList", t.toJson());
+            }
+        }
 
         return json;
+
     }
 
 }

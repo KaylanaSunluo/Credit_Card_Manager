@@ -2,9 +2,12 @@ package persistence;
 
 import model.CreditCard;
 import model.ToDoCards;
+import model.Transaction;
+import model.TransactionList;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,10 +45,18 @@ public class JsonReaderTest extends JsonTest {
             List<CreditCard> cards = cardList.getCreditCardsList();
             assertEquals(2, cards.size());
 
+            TransactionList transactionList = new TransactionList();
+            Transaction t1 = new Transaction("2020-02-02",200);
+
+            transactionList.insertTransactionToTransactionList(t1);
+            transactionList.insertTransactionToTransactionList(t1);
+
             checkCreditCard(cards.get(0),1,"2222 3333 4444 5555", "JL",
-                    "1002 Happy Garden, Vancouver", "(778)9871153", 3000,0);
+                    "1002 Happy Garden, Vancouver", "(778)9871153", 3000,0,
+                    transactionList);
             checkCreditCard(cards.get(1),2,"1111 2222 3333 4444", "KF",
-                    "2205 Lower Mall, Vancouver", "(778)1231123", 500, 0);
+                    "2205 Lower Mall, Vancouver", "(778)1231123", 500, 0,
+                    new TransactionList());
 
         } catch (IOException e) {
             fail("Couldn't read from file");
