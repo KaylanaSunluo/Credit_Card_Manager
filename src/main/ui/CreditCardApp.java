@@ -98,18 +98,11 @@ public class CreditCardApp {
         TransactionList targetCardTransactionList = targetCard.getTransactionList();
         List<Transaction> resultCardTransactionList = null;
 
-//        if (!isDateFormat(date)) {
-//            try {
-                resultCardTransactionList = targetCardTransactionList.transactionListBeforeGivenDate(date);
-//            } catch (ParseException e) {
-//                System.out.println("This should not happen!");
-//            }
-//            System.out.println("Date not valid!");
-//            System.out.println();
-//        } else {
-            System.out.println("Transaction records result is showing below:");
-            printTransactionList(resultCardTransactionList);
-//        }
+        resultCardTransactionList = targetCardTransactionList.transactionListBeforeGivenDate(date);
+
+        System.out.println("Transaction records result is showing below:");
+        printTransactionList(resultCardTransactionList);
+
     }
 
 
