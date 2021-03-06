@@ -144,11 +144,13 @@ public class CreditCardApp {
             count++;
             if (eachCard.getAccountNo() == accountNo) {
                 showCardDetails(eachCard);
-
-            } else if (count >= cardList.cardListLength()) {
-                System.out.println("No such card exists!");
+            } else if (eachCard.getAccountNo() != accountNo) {
+                if (count == cardList.cardListLength()) {
+                    System.out.println("No such card exists!");
+                }
             }
         }
+
     }
 
 
