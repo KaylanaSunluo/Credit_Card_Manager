@@ -27,16 +27,16 @@
         "phoneNo": "(778)1133222"
     },
     {
-        "address": "asdas",
+        "address": "123",
         "balance": 200,
-        "cardHolderName": "KS",
+        "cardHolderName": "12",
         "accountNo": 4,
         "transactionList": [{
             "date": "2020-01-01",
             "amount": 200
         }],
         "creditLimit": 2000,
-        "cardNo": "20000333",
-        "phoneNo": "123123"
+        "cardNo": "4",
+        "phoneNo": "123"
     }
 ]}

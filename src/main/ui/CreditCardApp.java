@@ -22,7 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CreditCardApp {
-    private static final String JSON_STORE = "./data/accounts.txt";
+    private static final String JSON_STORE = "./data/accounts.json";
     private CreditCard card1;
     private CreditCard card2;
     private CreditCard card3;
