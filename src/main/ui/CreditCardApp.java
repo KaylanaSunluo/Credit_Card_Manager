@@ -269,7 +269,7 @@ public class CreditCardApp {
     }
 
     // EFFECTS: save to-do cards to file
-    private void saveToDoCards() {
+    public void saveToDoCards() {
         try {
             jsonWriter.open();
             jsonWriter.write(cardList);

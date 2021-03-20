@@ -1,11 +1,11 @@
 {"creditCardList": [
     {
         "address": "2205 Lower Mall, Vancouver",
-        "balance": 200,
+        "balance": 0,
         "cardHolderName": "Kay Sun",
         "accountNo": 1,
         "transactionList": [{
-            "date": "2020-03-03",
+            "date": "2020-03-07",
             "amount": 200
         }],
         "creditLimit": 500,
@@ -31,12 +31,12 @@
         "phoneNo": "(778)1133222"
     },
     {
-        "address": "asda",
+        "address": "1231",
         "balance": 0,
-        "cardHolderName": "asdads",
+        "cardHolderName": "1231",
         "accountNo": 4,
-        "creditLimit": 2500,
-        "cardNo": "123412341234222",
-        "phoneNo": "123123131"
+        "creditLimit": 123123,
+        "cardNo": "12314",
+        "phoneNo": "1231"
     }
 ]}
