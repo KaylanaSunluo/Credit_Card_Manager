@@ -4,10 +4,20 @@
         "balance": 0,
         "cardHolderName": "Kay Sun",
         "accountNo": 1,
-        "transactionList": [{
-            "date": "2020-03-07",
-            "amount": 200
-        }],
+        "transactionList": [
+            {
+                "date": "2020-03-07",
+                "amount": 200
+            },
+            {
+                "date": "2009-09-09",
+                "amount": 20
+            },
+            {
+                "date": "2015-03-15",
+                "amount": 100
+            }
+        ],
         "creditLimit": 500,
         "cardNo": "1234 1234 4321 4321",
         "phoneNo": "(778)1231123"
@@ -31,12 +41,30 @@
         "phoneNo": "(778)1133222"
     },
     {
-        "address": "1231",
+        "address": "123123",
         "balance": 0,
-        "cardHolderName": "1231",
+        "cardHolderName": "123123",
         "accountNo": 4,
-        "creditLimit": 123123,
-        "cardNo": "12314",
-        "phoneNo": "1231"
+        "creditLimit": 123,
+        "cardNo": "123123",
+        "phoneNo": "123123"
+    },
+    {
+        "address": "12311",
+        "balance": 0,
+        "cardHolderName": "12412324",
+        "accountNo": 5,
+        "creditLimit": 2000,
+        "cardNo": "14123123114",
+        "phoneNo": "12315241"
+    },
+    {
+        "address": "Lower Mall",
+        "balance": 0,
+        "cardHolderName": "Kate",
+        "accountNo": 6,
+        "creditLimit": 800,
+        "cardNo": "1234 2312 1323 1322",
+        "phoneNo": "778 316 7283"
     }
 ]}

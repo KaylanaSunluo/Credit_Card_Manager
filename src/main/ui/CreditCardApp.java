@@ -89,7 +89,7 @@ public class CreditCardApp {
     }
 
     // EFFECTS: prints the transaction list with transactions before given date
-    private void doSearchTransactionsBeforeGivenDate() throws ParseException {
+    public void doSearchTransactionsBeforeGivenDate() throws ParseException {
         findTargetCard();
 
         System.out.print("Enter a date(yyyy-mm-dd) to search: ");
@@ -198,7 +198,7 @@ public class CreditCardApp {
 
     // MODIFIES: this
     // EFFECTS: adds a transaction to the transaction list of a credit card
-    private void doAddTransaction() {
+    public void doAddTransaction() {
         findTargetCard();
         System.out.print("Enter transaction date (yyyy-MM-dd): ");
         String date = input.next();

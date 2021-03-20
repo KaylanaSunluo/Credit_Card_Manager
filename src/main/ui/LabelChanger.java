@@ -49,4 +49,59 @@ public class LabelChanger extends JFrame implements ActionListener {
     public static void main(String[] args) {
         new LabelChanger();
     }
+
+
+
+    //https://blog.csdn.net/xietansheng/article/details/74366470
+//        private void runAddCard() {
+//            JFrame jf = new JFrame("Add a Credit Card");
+//            jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//
+//            JPanel accountNoPanel = new JPanel();
+//            accountNoPanel.add(new JLabel("Credit card No.:"));
+//            accountNoPanel.add(new JTextField(10));
+
+//            accountNoPanel.add(new JLabel("Card holder name:"));
+//            cardNo = new JTextField(10);
+////            cardNo.addActionListener(addListener);
+////            cardNo.getDocument().addDocumentListener(addListener);
+//
+//            accountNoPanel.add(new JTextField(10));
+//            accountNoPanel.add(new JLabel("Address:"));
+//            accountNoPanel.add(new JTextField(10));
+//            accountNoPanel.add(new JLabel("Phone:"));
+//            accountNoPanel.add(new JTextField(10));
+//            accountNoPanel.add(new JLabel("Initial credit limit:"));
+//            accountNoPanel.add(new JTextField(10));
+//
+//            JPanel addCardPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+//            JButton addButton = new JButton("Add");
+//            AddListener addListener = new AddListener(addButton);
+//            addButton.setActionCommand("Add");
+//            addButton.addActionListener(addListener);
+//
+//            JButton clearButton = new JButton("Clear");
+//            addCardPanel.add(addButton);
+
+//            cardNo = new JTextField(10);
+//            cardNo.addActionListener(addListener);
+//            cardNo.getDocument().addDocumentListener(addListener);
+//            String name = listModel.getElementAt(
+//                    list.getSelectedIndex()).toString();
+//
+//            Box verticalBox = Box.createVerticalBox();
+//            verticalBox.add(accountNoPanel);
+//            verticalBox.add(addCardPanel);
+//
+//            jf.setContentPane(verticalBox);
+//
+//            jf.pack();
+//            jf.setLocationRelativeTo(null);
+//            jf.setVisible(true);
+//
+//        }
+
+
+
 }
+
