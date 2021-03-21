@@ -183,11 +183,17 @@ public class ListDemo extends JPanel implements ListSelectionListener {
 
     class ClearListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            cardNo.setText("");
-            name.setText("");
-            address.setText("");
-            phone.setText("");
-            creditLimit.setText("");
+            int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to clear? ",
+                    "Confirm Clear", JOptionPane.YES_NO_OPTION);
+            if (response == 0) {
+                cardNo.setText("");
+                name.setText("");
+                address.setText("");
+                phone.setText("");
+                creditLimit.setText("");
+                date.setText("");
+                accountNo.setText("");
+            }
         }
     }
 
