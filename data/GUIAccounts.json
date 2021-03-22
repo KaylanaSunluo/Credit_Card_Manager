@@ -41,30 +41,12 @@
         "phoneNo": "(778)1133222"
     },
     {
-        "address": "123123",
+        "address": "123",
         "balance": 0,
-        "cardHolderName": "123123",
+        "cardHolderName": "123",
         "accountNo": 4,
         "creditLimit": 123,
-        "cardNo": "123123",
-        "phoneNo": "123123"
-    },
-    {
-        "address": "12311",
-        "balance": 0,
-        "cardHolderName": "12412324",
-        "accountNo": 5,
-        "creditLimit": 2000,
-        "cardNo": "14123123114",
-        "phoneNo": "12315241"
-    },
-    {
-        "address": "Lower Mall",
-        "balance": 0,
-        "cardHolderName": "Kate",
-        "accountNo": 6,
-        "creditLimit": 800,
-        "cardNo": "1234 2312 1323 1322",
-        "phoneNo": "778 316 7283"
+        "cardNo": "123",
+        "phoneNo": "123"
     }
 ]}

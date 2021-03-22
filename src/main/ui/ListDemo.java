@@ -6,6 +6,9 @@ import model.Transaction;
 import model.TransactionList;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -15,8 +18,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.text.ParseException;
 import java.util.List;
 
@@ -24,8 +26,8 @@ public class ListDemo extends JPanel implements ListSelectionListener {
     private JList list;
     private DefaultListModel listModel;
 
-    private static final String addCardString = "Add";
-    private static final String clearString = "Clear";
+    private static final String addCardString = "Add a new Card";
+    private static final String clearString = "    Clear    ";
     private static final String searchString = "Search Transactions";
     private static final String saveString = "Save records";
     private static final String loadString = "Load records";
@@ -50,6 +52,8 @@ public class ListDemo extends JPanel implements ListSelectionListener {
     private JButton loadButton;
     private JButton searchButton;
 
+    private JPanel centerPane;
+
 
 
     private int accountNum = 4;
@@ -59,6 +63,164 @@ public class ListDemo extends JPanel implements ListSelectionListener {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
+        //Create the list and put it in a scroll pane.
+//        list = new JList(createListModel());
+//        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//        list.setSelectedIndex(0);
+//        list.addListSelectionListener(this);
+//        list.setVisibleRowCount(10);
+        createList();
+        JScrollPane listScrollPane = new JScrollPane(list);
+
+        addButton = new JButton(addCardString);
+        AddListener addListener = new AddListener(addButton);
+        addButton.setActionCommand(addCardString);
+        addButton.addActionListener(addListener);
+        addButton.setEnabled(false);
+
+        searchButton = new JButton(searchString);
+        SearchListener searchListener = new SearchListener(searchButton);
+        searchButton.setActionCommand(searchString);
+        searchButton.addActionListener(searchListener);
+        searchButton.setEnabled(false);
+
+        addSaveListenerToButton();
+        addLoadListenerToButton();
+        addClearListenerToButton();
+
+        addAddListenerToTextFields(addListener);
+
+        addSearchListenerToTextFields(searchListener);
+
+        createCenterPane(addButton, searchButton, saveButton, loadButton);
+
+        add(listScrollPane, BorderLayout.CENTER);
+        add(centerPane, BorderLayout.SOUTH);
+
+    }
+
+    private void addSearchListenerToTextFields(SearchListener searchListener) {
+        accountNo = new JTextField(10);
+        addSearchListenerToTextField(searchListener, accountNo);
+
+        date = new JTextField(10);
+        addSearchListenerToTextField(searchListener, date);
+    }
+
+    private void addAddListenerToTextFields(AddListener addListener) {
+        cardNo = new JTextField(10);
+        addAddListenerToTextField(addListener, cardNo);
+
+        name = new JTextField(10);
+        addAddListenerToTextField(addListener, name);
+
+        address = new JTextField(10);
+        addAddListenerToTextField(addListener, address);
+
+        phone = new JTextField(10);
+        addAddListenerToTextField(addListener, phone);
+
+        creditLimit = new JTextField(10);
+        addAddListenerToTextField(addListener, creditLimit);
+    }
+
+    private void createList() {
+        list = new JList(createListModel());
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setSelectedIndex(0);
+        list.addListSelectionListener(this);
+        list.setVisibleRowCount(10);
+    }
+
+    private void addSearchListenerToTextField(SearchListener searchListener, JTextField accountNo) {
+        accountNo.addActionListener(searchListener);
+        accountNo.getDocument().addDocumentListener(searchListener);
+    }
+
+    private void addAddListenerToTextField(AddListener addListener, JTextField cardNo) {
+        cardNo.addActionListener(addListener);
+        cardNo.getDocument().addDocumentListener(addListener);
+    }
+
+    private void addClearListenerToButton() {
+        clearButton = new JButton(clearString);
+        ClearListener clearListener = new ClearListener(clearButton);
+        clearButton.setActionCommand(clearString);
+        clearButton.addActionListener(clearListener);
+    }
+
+    private void addLoadListenerToButton() {
+        loadButton = new JButton(loadString);
+        LoadListener loadListener = new LoadListener(loadButton);
+        loadButton.setActionCommand(loadString);
+        loadButton.addActionListener(loadListener);
+    }
+
+    private void addSaveListenerToButton() {
+        saveButton = new JButton(saveString);
+        SaveListener saveListener = new SaveListener(saveButton);
+        saveButton.setActionCommand(saveString);
+        saveButton.addActionListener(saveListener);
+    }
+
+    private void createCenterPane(JButton addButton, JButton searchButton, JButton saveButton, JButton loadButton) {
+        centerPane = new JPanel();
+        centerPane.setLayout(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridy = 0;
+
+        createLine(gbc, new JLabel("Card No.: "), new JLabel("Account No.:"), cardNo, accountNo);
+
+        gbc.gridy++;
+        createLine(gbc, new JLabel("Name: "), new JLabel("Date:"), name, date);
+
+        gbc.gridy++;
+        addLabelToPane(gbc,0, new JLabel("Address: "));
+        addTextFieldToPane(gbc,1, address);
+        addButtonToPane(gbc, 5, searchButton);
+
+        gbc.gridy++;
+        addLabelToPane(gbc,0, new JLabel("Phone: "));
+        addTextFieldToPane(gbc,1, phone);
+        addButtonToPane(gbc, 4, clearButton);
+
+        gbc.gridy++;
+        addLabelToPane(gbc,0, new JLabel("Credit Limit: "));
+        addTextFieldToPane(gbc,1, creditLimit);
+
+        gbc.gridy++;
+        addButtonToPane(gbc, 1, addButton);
+        addButtonToPane(gbc, 4, saveButton);
+        addButtonToPane(gbc, 5, loadButton);
+
+        centerPane.setBounds(100,100,400,200);
+    }
+
+    private void createLine(GridBagConstraints gbc, JLabel jl1, JLabel jl2, JTextField jtf1, JTextField jtf2) {
+        addLabelToPane(gbc,0,jl1);
+        addTextFieldToPane(gbc,1,jtf1);
+        addLabelToPane(gbc,4,jl2);
+        addTextFieldToPane(gbc,5,jtf2);
+    }
+
+    private void addTextFieldToPane(GridBagConstraints gbc, int i, JTextField jtf) {
+        gbc.gridx = i;
+        centerPane.add(jtf, gbc);
+    }
+
+    private void addLabelToPane(GridBagConstraints gbc, int i, JLabel jl) {
+        gbc.gridx = i;
+        centerPane.add(jl, gbc);
+    }
+
+    private void addButtonToPane(GridBagConstraints gbc, int i, JButton jb) {
+        gbc.gridx = i;
+        centerPane.add(jb, gbc);
+    }
+
+
+    private DefaultListModel createListModel() {
         CreditCard card1 = new CreditCard("1234 1234 4321 4321","Kay Sun",
                 "2205 Lower Mall, Vancouver","(778)1231123", 500);
         CreditCard card2 = new CreditCard("1231 3131 4342 1235","Janice Lee",
@@ -68,7 +230,6 @@ public class ListDemo extends JPanel implements ListSelectionListener {
         Transaction t1 = new Transaction("2020-03-07",200);
         Transaction t2 = new Transaction("2009-09-09",20);
         Transaction t3 = new Transaction("2015-03-15",100);
-
 
         cardList = new ToDoCards();
         card1.addTransactionToCard(t1);
@@ -83,92 +244,7 @@ public class ListDemo extends JPanel implements ListSelectionListener {
         listModel.addElement(showCardInfo(card2));
         listModel.addElement(showCardInfo(card3));
 
-        //Create the list and put it in a scroll pane.
-        list = new JList(listModel);
-        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        list.setSelectedIndex(0);
-        list.addListSelectionListener(this);
-        list.setVisibleRowCount(10);
-        JScrollPane listScrollPane = new JScrollPane(list);
-
-        JButton addButton = new JButton(addCardString);
-        AddListener addListener = new AddListener(addButton);
-        addButton.setActionCommand(addCardString);
-        addButton.addActionListener(addListener);
-        addButton.setEnabled(false);
-
-        JButton searchButton = new JButton(searchString);
-        SearchListener searchListener = new SearchListener(searchButton);
-        searchButton.setActionCommand(searchString);
-        searchButton.addActionListener(searchListener);
-        searchButton.setEnabled(false);
-
-        clearButton = new JButton(clearString);
-        clearButton.setActionCommand(clearString);
-        clearButton.addActionListener(new ClearListener());
-
-        JButton saveButton = new JButton(saveString);
-        SaveListener saveListener = new SaveListener(saveButton);
-        saveButton.setActionCommand(saveString);
-        saveButton.addActionListener(saveListener);
-
-        JButton loadButton = new JButton(loadString);
-        LoadListener loadListener = new LoadListener(loadButton);
-        loadButton.setActionCommand(loadString);
-        loadButton.addActionListener(loadListener);
-
-        cardNo = new JTextField(10);
-        cardNo.addActionListener(addListener);
-        cardNo.getDocument().addDocumentListener(addListener);
-        String str = listModel.getElementAt(list.getSelectedIndex()).toString();
-
-        name = new JTextField(10);
-        name.addActionListener(addListener);
-        name.getDocument().addDocumentListener(addListener);
-
-        address = new JTextField(10);
-        address.addActionListener(addListener);
-        address.getDocument().addDocumentListener(addListener);
-
-        phone = new JTextField(10);
-        phone.addActionListener(addListener);
-        phone.getDocument().addDocumentListener(addListener);
-
-        creditLimit = new JTextField(10);
-        creditLimit.addActionListener(addListener);
-        creditLimit.getDocument().addDocumentListener(addListener);
-
-        accountNo = new JTextField(10);
-        accountNo.addActionListener(searchListener);
-
-        date = new JTextField(10);
-        date.addActionListener(searchListener);
-        date.getDocument().addDocumentListener(searchListener);
-
-
-        JPanel buttonPane = new JPanel();
-        buttonPane.setLayout(new BoxLayout(buttonPane,
-                BoxLayout.LINE_AXIS));
-        buttonPane.add(clearButton);
-        buttonPane.add(Box.createHorizontalStrut(5));
-        buttonPane.add(new JSeparator(SwingConstants.HORIZONTAL));
-        buttonPane.add(Box.createHorizontalStrut(5));
-        buttonPane.add(cardNo);
-        buttonPane.add(name);
-        buttonPane.add(address);
-        buttonPane.add(phone);
-        buttonPane.add(creditLimit);
-        buttonPane.add(accountNo);
-        buttonPane.add(date);
-
-        buttonPane.add(addButton);
-        buttonPane.add(saveButton);
-        buttonPane.add(loadButton);
-        buttonPane.add(searchButton);
-        buttonPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-
-        add(listScrollPane, BorderLayout.CENTER);
-        add(buttonPane, BorderLayout.PAGE_END);
+        return listModel;
     }
 
 
@@ -182,17 +258,30 @@ public class ListDemo extends JPanel implements ListSelectionListener {
     }
 
     class ClearListener implements ActionListener {
+        private JButton button;
+
+        public ClearListener(JButton button) {
+            this.button = button;
+        }
+
         public void actionPerformed(ActionEvent e) {
+
+            try {
+                InputStream input = new FileInputStream("./data/sound.wav");
+                AudioStream as = new AudioStream(input);
+                AudioPlayer.player.start(as);
+
+            } catch (FileNotFoundException exception) {
+                System.out.print("FileNotFoundException");
+            } catch (IOException exception) {
+                System.out.print("Oops, something wrong!");
+            }
+
+
             int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to clear? ",
                     "Confirm Clear", JOptionPane.YES_NO_OPTION);
             if (response == 0) {
-                cardNo.setText("");
-                name.setText("");
-                address.setText("");
-                phone.setText("");
-                creditLimit.setText("");
-                date.setText("");
-                accountNo.setText("");
+                clearAllTextFields();
             }
         }
     }
@@ -389,21 +478,17 @@ public class ListDemo extends JPanel implements ListSelectionListener {
             }
 
             listModel.addElement(showCardInfo(newCard));
-            //If we just wanted to add to the end, we'd do this:
-            //listModel.addElement(employeeName.getText());
 
             //Reset the text field.
             cardNo.requestFocusInWindow();
-            cardNo.setText("");
-            name.setText("");
-            address.setText("");
-            phone.setText("");
-            creditLimit.setText("");
+            clearAllTextFields();
+
 
             //Select the new item and make it visible.
             list.setSelectedIndex(index);
             list.ensureIndexIsVisible(index);
         }
+
 
 
 
@@ -445,6 +530,16 @@ public class ListDemo extends JPanel implements ListSelectionListener {
             }
             return false;
         }
+    }
+
+    private void clearAllTextFields() {
+        cardNo.setText("");
+        name.setText("");
+        address.setText("");
+        phone.setText("");
+        creditLimit.setText("");
+        accountNo.setText("");
+        date.setText("");
     }
 
 
