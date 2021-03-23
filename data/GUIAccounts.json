@@ -41,12 +41,12 @@
         "phoneNo": "(778)1133222"
     },
     {
-        "address": "123",
+        "address": "KK",
         "balance": 0,
-        "cardHolderName": "123",
+        "cardHolderName": "K",
         "accountNo": 4,
-        "creditLimit": 123,
-        "cardNo": "123",
-        "phoneNo": "123"
+        "creditLimit": 1000,
+        "cardNo": "4444 1234 1234 2222",
+        "phoneNo": "12378123"
     }
 ]}
