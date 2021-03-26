@@ -258,14 +258,8 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
         card1.addTransactionToCard(t1);
         card1.addTransactionToCard(t2);
         card1.addTransactionToCard(t3);
-//        cardList.addCard(card1);
-//        cardList.addCard(card2);
-//        cardList.addCard(card3);
 
         listModel = new DefaultListModel();
-//        listModel.addElement(showCardInfo(card1));
-//        listModel.addElement(showCardInfo(card2));
-//        listModel.addElement(showCardInfo(card3));
 
         return listModel;
     }
@@ -376,34 +370,45 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
         }
 
         public void actionPerformed(ActionEvent e) {
-            findTargetCard();
-
-            TransactionList targetCardTransactionList = targetCard.getTransactionList();
-            List<Transaction> resultCardTransactionList = null;
-
             try {
-                resultCardTransactionList = targetCardTransactionList.transactionListBeforeGivenDate(date.getText());
-            } catch (ParseException parseException) {
-                parseException.printStackTrace();
+                findTargetCard();
+                TransactionList targetCardTransactionList = targetCard.getTransactionList();
+                List<Transaction> resultCardTransactionList = null;
+                try {
+                    resultCardTransactionList
+                            = targetCardTransactionList.transactionListBeforeGivenDate(date.getText());
+                } catch (ParseException parseException) {
+                    parseException.printStackTrace();
+                }
+
+                listModel.clear();
+
+                for (Transaction t: resultCardTransactionList) {
+                    listModel.addElement(showTransactionInfo(t));
+                }
+            } catch (NullPointerException nullPointerException) {
+                clearAllTextFields();
             }
 
-            listModel.clear();
 
-            for (Transaction t: resultCardTransactionList) {
-                listModel.addElement(showTransactionInfo(t));
-            }
 
-            //Create the list and put it in a scroll pane.
-            list = new JList(listModel);
-            list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            list.setSelectedIndex(0);
-            list.setVisibleRowCount(10);
+
+            // Put the list in a scroll pane.
+            createList();
             JScrollPane listScrollPane = new JScrollPane(list);
             add(listScrollPane, BorderLayout.CENTER);
 
             clearAllTextFields();
             clearButton.setEnabled(true);
 
+        }
+
+        // Create the list
+        private void createList() {
+            list = new JList(listModel);
+            list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            list.setSelectedIndex(0);
+            list.setVisibleRowCount(10);
         }
 
         // EFFECTS: find the card with the given accountNo, printed a message otherwise
@@ -413,9 +418,6 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
                 if (eachCard.getAccountNo() == Integer.valueOf(accountNo.getText())) {
                     targetCard = eachCard;
                     count++;
-                } else if (count == cardList.cardListLength()) {
-                    System.out.println("No such card exists!\n");
-                    System.out.println();
                 }
             }
         }
@@ -454,21 +456,6 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
             }
             return false;
         }
-
-        //This method is required by ListSelectionListener.
-//        public void valueChanged(ListSelectionEvent e) {
-//            if (e.getValueIsAdjusting() == false) {
-//
-//                if (list.getSelectedIndex() == -1) {
-//                    //No selection, disable fire button.
-//                    searchButton.setEnabled(false);
-//
-//                } else {
-//                    //Selection, enable the fire button.
-//                    searchButton.setEnabled(true);
-//                }
-//            }
-//        }
     }
 
 
