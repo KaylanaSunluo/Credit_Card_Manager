@@ -31,7 +31,7 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
 
     private static final String addCardString = "Add a new Card";
     private static final String clearString = "    Clear    ";
-    private static final String searchString = "Search Transactions";
+    private static final String searchString = "Search Transactions Before the Date";
     private static final String saveString = "Save records";
     private static final String loadString = "Load records";
     private JTextField cardNo;
@@ -258,14 +258,14 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
         card1.addTransactionToCard(t1);
         card1.addTransactionToCard(t2);
         card1.addTransactionToCard(t3);
-        cardList.addCard(card1);
-        cardList.addCard(card2);
-        cardList.addCard(card3);
+//        cardList.addCard(card1);
+//        cardList.addCard(card2);
+//        cardList.addCard(card3);
 
         listModel = new DefaultListModel();
-        listModel.addElement(showCardInfo(card1));
-        listModel.addElement(showCardInfo(card2));
-        listModel.addElement(showCardInfo(card3));
+//        listModel.addElement(showCardInfo(card1));
+//        listModel.addElement(showCardInfo(card2));
+//        listModel.addElement(showCardInfo(card3));
 
         return listModel;
     }
@@ -400,6 +400,10 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
             list.setVisibleRowCount(10);
             JScrollPane listScrollPane = new JScrollPane(list);
             add(listScrollPane, BorderLayout.CENTER);
+
+            clearAllTextFields();
+            clearButton.setEnabled(true);
+
         }
 
         // EFFECTS: find the card with the given accountNo, printed a message otherwise
@@ -492,6 +496,8 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
 
             CreditCard newCard = new CreditCard(cardNo.getText(), name.getText(), address.getText(), phone.getText(),
                     Integer.valueOf(creditLimit.getText()));
+            accountNum = 1;
+            newCard.changeAccountNo(accountNum++);
             cardList.addCard(newCard);
 
             int index = list.getSelectedIndex(); //get selected index
