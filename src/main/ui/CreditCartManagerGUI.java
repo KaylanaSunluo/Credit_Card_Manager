@@ -307,11 +307,15 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
     class SaveListener implements ActionListener {
         private JButton button;
 
+        // MODIFIES: this
+        // EFFECTS: adds a button to this.button
         public SaveListener(JButton button) {
             this.button = button;
         }
 
-        //Required by ActionListener.
+        // MODIFIES: this
+        // EFFECTS: saves records to the JSon file and shows a message box.
+        //          shows a warning if the file cannot be found.
         public void actionPerformed(ActionEvent e) {
             try {
                 jsonWriter.open();
@@ -332,11 +336,14 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
     class LoadListener implements ActionListener {
         private JButton button;
 
+        // MODIFIES: this
+        // EFFECTS: adds a button to this.button
         public LoadListener(JButton button) {
             this.button = button;
         }
 
-        //Required by ActionListener.
+        //EFFECTS: if the loading file is available, load card records and show a message box
+        //         show a warning otherwise.
         public void actionPerformed(ActionEvent e) {
             accountNum = 1;
             try {
@@ -368,16 +375,20 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
         }
     }
 
-    //This listener is shared by the text field and the search button
+    //EFFECTS: This listener is shared by the text field and the search button
     class SearchListener implements ActionListener, DocumentListener {
         private CreditCard targetCard;
         private boolean alreadyEnabled = false;
         private JButton button;
 
+        // MODIFIES: this
+        // EFFECTS: adds a button to this.button
         public SearchListener(JButton button) {
             this.button = button;
         }
 
+        //EFFECTS: if the date is invalid, show message box
+        //         if the date is valid, show the transactions records before the date
         public void actionPerformed(ActionEvent e) {
             try {
                 findTargetCard();
@@ -392,17 +403,12 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
                             "Warning", JOptionPane.WARNING_MESSAGE);
                 }
 
-
-
                 for (Transaction t: resultCardTransactionList) {
                     listModel.addElement(showTransactionInfo(t));
                 }
             } catch (NullPointerException nullPointerException) {
                 clearAllTextFields();
             }
-
-
-
 
             // Put the list in a scroll pane.
             createList();
@@ -414,7 +420,7 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
 
         }
 
-        // Create the list
+        // EFFECTS: creates the list
         private void createList() {
             list = new JList(listModel);
             list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -434,18 +440,24 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
         }
 
         //Required by DocumentListener.
+        // MODIFIES: this
+        // EFFECTS: updates the button
         @Override
         public void insertUpdate(DocumentEvent e) {
             enableButton();
         }
 
         //Required by DocumentListener.
+        // MODIFIES: this
+        // EFFECTS: removes the button update
         @Override
         public void removeUpdate(DocumentEvent e) {
             handleEmptyTextField(e);
         }
-        //Required by DocumentListener.
 
+        //Required by DocumentListener.
+        // MODIFIES: this
+        // EFFECTS: enables the button if the text field is not empty, false otherwise
         @Override
         public void changedUpdate(DocumentEvent e) {
             if (!handleEmptyTextField(e)) {
@@ -453,12 +465,17 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
             }
         }
 
+        // MODIFIES: this
+        // EFFECTS: enables the button
         private void enableButton() {
             if (!alreadyEnabled) {
                 button.setEnabled(true);
             }
         }
 
+        // MODIFIES: this
+        // EFFECTS: returns true and sets the button not enabled if the text field is empty,
+        //          return false otherwise
         private boolean handleEmptyTextField(DocumentEvent e) {
             if (e.getDocument().getLength() <= 0) {
                 button.setEnabled(false);
@@ -476,11 +493,14 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
         private boolean alreadyEnabled = false;
         private JButton button;
 
+        // MODIFIES: this
+        // EFFECTS: adds a button to this.button
         public AddListener(JButton button) {
             this.button = button;
         }
 
-        //Required by ActionListener.
+        // MODIFIES: this
+        // EFFECTS: adds a new credit card to the card list
         public void actionPerformed(ActionEvent e) {
             String cardNumber = cardNo.getText();
 
@@ -511,43 +531,51 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
             cardNo.requestFocusInWindow();
             clearAllTextFields();
 
-
             //Select the new item and make it visible.
             list.setSelectedIndex(index);
             list.ensureIndexIsVisible(index);
         }
 
 
-        //This method tests for string equality. You could certainly
-        //get more sophisticated about the algorithm.  For example,
-        //you might want to ignore white space and capitalization.
+        // EFFECTS: returns true if listModel contains the cardNo, false otherwise
         protected boolean alreadyInList(String cardNo) {
             return listModel.contains(cardNo);
         }
 
-        //Required by DocumentListener.
+        // Required by DocumentListener.
+        // MODIFIES: this
+        // EFFECTS: updates the button
         public void insertUpdate(DocumentEvent e) {
             enableButton();
         }
 
-        //Required by DocumentListener.
+        // Required by DocumentListener.
+        // MODIFIES: this
+        // EFFECTS: removes the button update
         public void removeUpdate(DocumentEvent e) {
             handleEmptyTextField(e);
         }
 
-        //Required by DocumentListener.
+        // Required by DocumentListener.
+        // MODIFIES: this
+        // EFFECTS: enables the button if the text field is not empty, false otherwise
         public void changedUpdate(DocumentEvent e) {
             if (!handleEmptyTextField(e)) {
                 enableButton();
             }
         }
 
+        // MODIFIES: this
+        // EFFECTS: enables the button
         private void enableButton() {
             if (!alreadyEnabled) {
                 button.setEnabled(true);
             }
         }
 
+        // MODIFIES: this
+        // EFFECTS: returns true and sets the button not enabled if the text field is empty,
+        //          return false otherwise
         private boolean handleEmptyTextField(DocumentEvent e) {
             if (e.getDocument().getLength() <= 0) {
                 button.setEnabled(false);
@@ -558,6 +586,7 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: clear all the text fields
     private void clearAllTextFields() {
         cardNo.setText("");
@@ -570,7 +599,10 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
     }
 
 
-    //This method is required by ListSelectionListener.
+    // This method is required by ListSelectionListener.
+    // MODIFIES: this
+    // EFFECTS: if the value is adjusting and is not selected, sets the clear button not enabled;
+    //          if the value is adjusting and is selected, sets the clear button enabled
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {
 
@@ -585,11 +617,8 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
         }
     }
 
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
-     */
+    // EFFECTS: creates the GUI and show it.
+    //           For thread safety, method should be invoked from the event-dispatching thread.
     private static void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("Credit Card Manager");
@@ -606,6 +635,7 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
         frame.setVisible(true);
     }
 
+    // EFFECTS: creates and shows this application's GUI.
     public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
