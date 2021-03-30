@@ -318,8 +318,12 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
                 jsonWriter.write(cardList);
                 jsonWriter.close();
                 System.out.println("Saved to" + JSON_STORE);
+                JOptionPane.showMessageDialog(null,"Records saved!",
+                        "Save Message", JOptionPane.WARNING_MESSAGE);
             } catch (FileNotFoundException exception) {
                 System.out.println("Unable to save to " + JSON_STORE);
+                JOptionPane.showMessageDialog(null,"Cannot find the file",
+                        "Save Message warning", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
@@ -352,8 +356,13 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
                 list.setVisibleRowCount(10);
                 JScrollPane listScrollPane = new JScrollPane(list);
                 add(listScrollPane, BorderLayout.CENTER);
+
+                JOptionPane.showMessageDialog(null,"Records loaded!",
+                        "Load Message", JOptionPane.WARNING_MESSAGE);
             } catch (IOException exception) {
                 System.out.println("Unable to read from file: " + JSON_STORE);
+                JOptionPane.showMessageDialog(null,"Records cannot be loaded!",
+                        "Load Message Warning", JOptionPane.WARNING_MESSAGE);
             }
             clearButton.setEnabled(true);
         }
@@ -377,11 +386,13 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
                 try {
                     resultCardTransactionList
                             = targetCardTransactionList.transactionListBeforeGivenDate(date.getText());
+                    listModel.clear();
                 } catch (ParseException parseException) {
-                    parseException.printStackTrace();
+                    JOptionPane.showMessageDialog(null,"Invalid Date!",
+                            "Warning", JOptionPane.WARNING_MESSAGE);
                 }
 
-                listModel.clear();
+
 
                 for (Transaction t: resultCardTransactionList) {
                     listModel.addElement(showTransactionInfo(t));
@@ -483,7 +494,7 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
 
             CreditCard newCard = new CreditCard(cardNo.getText(), name.getText(), address.getText(), phone.getText(),
                     Integer.valueOf(creditLimit.getText()));
-            accountNum = 1;
+
             newCard.changeAccountNo(accountNum++);
             cardList.addCard(newCard);
 
