@@ -1,11 +1,13 @@
 package model;
 
+import model.exceptions.FormatIncorrectException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class CreditCardTest {
     private CreditCard card;
@@ -25,11 +27,6 @@ public class CreditCardTest {
         t2 = new Transaction("2015-12-23",100);
         t3 = new Transaction("2016-01-24",-1000);
 
-    }
-
-    @Test
-    public void testGetAccountNo() {
-        assertEquals(3,card.getAccountNo());
     }
 
     @Test
@@ -94,4 +91,53 @@ public class CreditCardTest {
         assertEquals(t1, listOfTransactionOfCard.get(0));
         assertEquals(t2, listOfTransactionOfCard.get(1));
     }
+
+    @Test
+    public void testChangeValidAccountNo() {
+        try {
+            card.changeAccountNo(9);
+            assertEquals(9,card.getAccountNo());
+        } catch (FormatIncorrectException formatIncorrectException) {
+            fail("FormatIncorrectException was thrown!");
+        }
+
+    }
+    @Test
+    public void testChangeZeroAccountNo() {
+        try {
+            card.changeAccountNo(0);
+            fail("FormatIncorrectException should have been thrown!");
+        } catch (FormatIncorrectException formatIncorrectException) {
+            //pass;
+        }
+    }
+
+    @Test
+    public void testChangeNegativeAccountNo() {
+        try {
+            card.changeAccountNo(-4);
+            fail("FormatIncorrectException should have been thrown!");
+        } catch (FormatIncorrectException formatIncorrectException) {
+            //pass;
+        }
+    }
+
+    @Test
+    public void testChangeBalance() {
+        assertEquals(0,card.getBalance());
+        card.changeBalance(900);
+        assertEquals(900,card.getBalance());
+    }
+
+    @Test
+    public void testChangeTransactionList() {
+        TransactionList aList = new TransactionList();
+        aList.insertTransactionToTransactionList(t1);
+        aList.insertTransactionToTransactionList(t2);
+        card.changeTransactionList(aList);
+
+        assertEquals(aList,card.getTransactionList());
+
+    }
+
 }

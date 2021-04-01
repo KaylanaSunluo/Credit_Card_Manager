@@ -123,6 +123,8 @@ public class CreditCard implements Writable {
         this.balance = newBalance;
     }
 
+    // MODIFIES: this
+    // EFFECTS: change this.transactionList into transactionList
     public void changeTransactionList(TransactionList transactionList) {
         this.transactionList = transactionList;
     }

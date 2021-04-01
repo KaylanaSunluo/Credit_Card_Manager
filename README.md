@@ -40,4 +40,4 @@ search for a list of transactions before a given date of that card
 You must have at least one method that throws a checked exception. 
 You must have one test for the case where the exception is expected and another where the exception is not expected.* 
 <br>**class**: CreditCard.java </br>
-<br>**method**: changeAccountNo(int), changeBalance(double)</br>
+<br>**method**: changeAccountNo(int)</br>

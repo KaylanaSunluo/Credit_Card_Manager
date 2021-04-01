@@ -17,8 +17,7 @@ public class Transaction implements Writable {
     private String date;
     private double amount;
 
-    // REQUIRES: date is in the form "yyyy/MM/dd" and no later then today;
-    //           amount != 0
+
     // MODIFIES: this
     // EFFECTS: constructs a transaction with an associated date and amount,
     // with positive meaning customers' borrowing and negative meaning credit card payment
