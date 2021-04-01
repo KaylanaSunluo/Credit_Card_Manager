@@ -141,9 +141,9 @@ public class CreditCard implements Writable {
         json.put("creditLimit", creditLimit);
         json.put("balance", balance);
 
-        List<Transaction> list = transactionList.getTransactionList();
+        List<Transaction> list = transactionList.getList();
         if (list.size() != 0) {
-            for (Transaction t : transactionList.getTransactionList()) {
+            for (Transaction t : transactionList.getList()) {
                 json.append("transactionList", t.toJson());
             }
         }

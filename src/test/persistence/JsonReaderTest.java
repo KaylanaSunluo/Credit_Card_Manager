@@ -4,6 +4,8 @@ import model.CreditCard;
 import model.ToDoCards;
 import model.Transaction;
 import model.TransactionList;
+import model.exceptions.FormatIncorrectException;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -29,7 +31,7 @@ public class JsonReaderTest extends JsonTest {
         JsonReader reader = new JsonReader("./data/testReaderEmptyToDoCards.json");
         try {
             ToDoCards cardList = reader.read();
-            assertEquals(0, cardList.cardListLength());
+            assertEquals(0, cardList.length());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
@@ -41,7 +43,7 @@ public class JsonReaderTest extends JsonTest {
         try {
             ToDoCards cardList = reader.read();
 
-            List<CreditCard> cards = cardList.getCreditCardsList();
+            List<CreditCard> cards = cardList.getList();
             assertEquals(2, cards.size());
 
             TransactionList transactionList = new TransactionList();
@@ -61,4 +63,6 @@ public class JsonReaderTest extends JsonTest {
             fail("Couldn't read from file");
         }
     }
+
+
 }

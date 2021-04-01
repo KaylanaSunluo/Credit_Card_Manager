@@ -37,7 +37,7 @@ public class TransactionListTest {
         transactionList.insertTransactionToTransactionList(t1);
         transactionList.insertTransactionToTransactionList(t2);
 
-        List<Transaction> resultTransactionList = transactionList.getTransactionList();
+        List<Transaction> resultTransactionList = transactionList.getList();
 
         assertEquals(2,resultTransactionList.size());
         assertEquals(t1,resultTransactionList.get(0));
@@ -77,7 +77,7 @@ public class TransactionListTest {
         expectedTransactionList.add(t2);
         expectedTransactionList.add(t2);
 
-        assertEquals(expectedTransactionList, transactionList.getTransactionList());
+        assertEquals(expectedTransactionList, transactionList.getList());
     }
 
 

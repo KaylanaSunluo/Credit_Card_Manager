@@ -55,7 +55,7 @@ public class JsonWriterTest extends JsonTest {
 
             JsonReader reader = new JsonReader("./data/testWriterEmptyToDoCards.json");
             cardList = reader.read();
-            assertEquals(0, cardList.cardListLength());
+            assertEquals(0, cardList.length());
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }
@@ -77,7 +77,7 @@ public class JsonWriterTest extends JsonTest {
             JsonReader reader = new JsonReader("./data/testWriterGeneralToDoCards.json");
             cardList = reader.read();
 
-            List<CreditCard> cards = cardList.getCreditCardsList();
+            List<CreditCard> cards = cardList.getList();
             assertEquals(2, cards.size());
 
 

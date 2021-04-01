@@ -35,7 +35,11 @@ public class JsonReader {
     public ToDoCards read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
-        return parseToDoCards(jsonObject);
+        try {
+            return parseToDoCards(jsonObject);
+        } catch (FormatIncorrectException formatIncorrectException) {
+            return new ToDoCards();
+        }
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -49,7 +53,7 @@ public class JsonReader {
     }
 
     // EFFECTS: parses to-do cards from JSON object and returns it
-    private ToDoCards parseToDoCards(JSONObject jsonObject) {
+    private ToDoCards parseToDoCards(JSONObject jsonObject) throws FormatIncorrectException {
         ToDoCards cardList = new ToDoCards();
         addCards(cardList, jsonObject);
         return cardList;
@@ -57,7 +61,7 @@ public class JsonReader {
 
     // MODIFIES: cardList
     // EFFECTS: parses cards from JSON object and adds them to to-do cards
-    private void addCards(ToDoCards cardList, JSONObject jsonObject) {
+    private void addCards(ToDoCards cardList, JSONObject jsonObject) throws FormatIncorrectException {
         JSONArray jsonArray = jsonObject.getJSONArray("creditCardList");
         for (Object json : jsonArray) {
             JSONObject nextCreditCard = (JSONObject) json;
@@ -67,7 +71,8 @@ public class JsonReader {
 
     // MODIFIES: cardList
     // EFFECTS: parses card from JSON object and adds it to to-do cards
-    private void addCreditCard(ToDoCards cardList, JSONObject jsonObject) throws JSONException {
+    private void addCreditCard(ToDoCards cardList, JSONObject jsonObject) throws JSONException,
+            FormatIncorrectException {
         int accountNo = jsonObject.getInt("accountNo");
         String cardNo = jsonObject.getString("cardNo");
         String cardHolderName = jsonObject.getString("cardHolderName");
@@ -77,12 +82,10 @@ public class JsonReader {
         double balance = jsonObject.getDouble("balance");
 
         CreditCard card = new CreditCard(cardNo, cardHolderName, address, phoneNo, creditLimit);
-        try {
-            card.changeAccountNo(accountNo);
-            card.changeBalance(balance);
-        } catch (FormatIncorrectException e) {
-            e.printStackTrace();
-        }
+
+        card.changeAccountNo(accountNo);
+        card.changeBalance(balance);
+
 
         try {
             TransactionList transactionList = parseTransactionList(jsonObject.getJSONArray("transactionList"));

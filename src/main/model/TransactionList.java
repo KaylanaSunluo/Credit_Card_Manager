@@ -1,16 +1,13 @@
 package model;
 
 
-import org.json.JSONObject;
-import persistence.Writable;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 
 // represents a list of transactions happened so far
-public class TransactionList extends ArrayList {
+public class TransactionList extends ArrayList implements RecordList {
 
     private List<Transaction> transactionList;
 
@@ -26,6 +23,7 @@ public class TransactionList extends ArrayList {
     }
 
     // EFFECTS: returns the number of transactions in the list
+    @Override
     public int length() {
         return transactionList.size();
     }
@@ -40,9 +38,15 @@ public class TransactionList extends ArrayList {
     }
 
     // EFFECTS: returns the transaction list as a List<Transaction>
-    public List<Transaction> getTransactionList() {
+    @Override
+    public List<Transaction> getList() {
         return transactionList;
     }
+
+//    // EFFECTS: returns the transaction list as a List<Transaction>
+//    public List<Transaction> getTransactionList() {
+//        return transactionList;
+//    }
 
 
     // MODIFIES: this

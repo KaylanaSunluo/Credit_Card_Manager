@@ -35,7 +35,7 @@ public class ToDoCardsTest {
     @Test
     public void testAddCard() {
         cardList.addCard(c1);
-        List<CreditCard> result = cardList.getCreditCardsList();
+        List<CreditCard> result = cardList.getList();
         assertEquals(1,result.size());
         assertTrue(result.contains(c1));
     }
@@ -49,7 +49,7 @@ public class ToDoCardsTest {
         expectedCardList.add(c1);
         expectedCardList.add(c2);
 
-        assertEquals(expectedCardList,cardList.getCreditCardsList());
+        assertEquals(expectedCardList,cardList.getList());
     }
 
     @Test
@@ -57,7 +57,7 @@ public class ToDoCardsTest {
         cardList.addCard(c1);
         cardList.addCard(c2);
         cardList.addCard(c3);
-        assertEquals(3,cardList.cardListLength());
+        assertEquals(3,cardList.length());
 
     }
 

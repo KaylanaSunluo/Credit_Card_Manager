@@ -138,12 +138,12 @@ public class CreditCardApp {
         System.out.print("Enter account No.: ");
         int accountNo = input.nextInt();
         int count = 0;
-        for (CreditCard eachCard : cardList.getCreditCardsList()) {
+        for (CreditCard eachCard : cardList.getList()) {
             count++;
             if (eachCard.getAccountNo() == accountNo) {
                 showCardDetails(eachCard);
             } else if (eachCard.getAccountNo() != accountNo) {
-                if (count == cardList.cardListLength()) {
+                if (count == cardList.length()) {
                     System.out.println("No such card exists!");
                 }
             }
@@ -217,7 +217,7 @@ public class CreditCardApp {
         if (targetCard.getBalance() + newTransaction.getAmount() <= targetCard.getCreditLimit()) {
             targetCard.addTransactionToCard(newTransaction);
             TransactionList newTransactionList = targetCard.getTransactionList();
-            List<Transaction> resultTransactionList = newTransactionList.getTransactionList();
+            List<Transaction> resultTransactionList = newTransactionList.getList();
 
             targetCard.updateBalance(newTransaction);
             System.out.println("Transaction records of AccountNo." + targetCard.getAccountNo() + " are showing below:");
@@ -235,13 +235,13 @@ public class CreditCardApp {
         System.out.print("Enter account No.: ");
         int accountNo = input.nextInt();
         int count = 1;
-        for (CreditCard eachCard : cardList.getCreditCardsList()) {
+        for (CreditCard eachCard : cardList.getList()) {
             if (eachCard.getAccountNo() == accountNo) {
                 targetCard = eachCard;
                 showCardDetails(eachCard);
                 count++;
 
-            } else if (count == cardList.cardListLength()) {
+            } else if (count == cardList.length()) {
                 System.out.println("No such card exists!\n");
                 System.out.println();
             }

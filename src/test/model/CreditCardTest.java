@@ -69,8 +69,8 @@ public class CreditCardTest {
         expectedTransactionList.insertTransactionToTransactionList(t1);
         expectedTransactionList.insertTransactionToTransactionList(t2);
 
-        assertEquals(expectedTransactionList.getTransactionList(),
-                resultTransactionList.getTransactionList());
+        assertEquals(expectedTransactionList.getList(),
+                resultTransactionList.getList());
 
     }
 
@@ -85,7 +85,7 @@ public class CreditCardTest {
         card.addTransactionToCard(t1);
         card.addTransactionToCard(t2);
         TransactionList transactionListOfCard = card.getTransactionList();
-        List<Transaction> listOfTransactionOfCard= transactionListOfCard.getTransactionList();
+        List<Transaction> listOfTransactionOfCard= transactionListOfCard.getList();
 
         assertEquals(2, listOfTransactionOfCard.size());
         assertEquals(t1, listOfTransactionOfCard.get(0));

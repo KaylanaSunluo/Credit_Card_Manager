@@ -1,5 +1,12 @@
 package model;
 
-public abstract class RecordList {
+import java.util.ArrayList;
+import java.util.List;
+
+public interface RecordList {
+
+    public abstract List getList();
+
+    public abstract int length();
 
 }

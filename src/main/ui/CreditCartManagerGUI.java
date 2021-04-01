@@ -19,7 +19,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.text.Normalizer;
 import java.text.ParseException;
 import java.util.List;
 /*
@@ -350,7 +349,7 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
             try {
                 cardList = jsonReader.read();
                 listModel.clear();
-                for (CreditCard card: cardList.getCreditCardsList()) {
+                for (CreditCard card: cardList.getList()) {
                     try {
                         card.changeAccountNo(accountNum++);
                         listModel.addElement(showCardInfo(card));
@@ -375,12 +374,6 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
             clearButton.setEnabled(true);
         }
 
-//        private void createList() {
-//            list = new JList(listModel);
-//            list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//            list.setSelectedIndex(0);
-//            list.setVisibleRowCount(10);
-//        }
     }
 
     //EFFECTS: This listener is shared by the text field and the search button
@@ -419,8 +412,6 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
                 clearAllTextFields();
             }
 
-
-
             // Put the list in a scroll pane.
             createNewList();
             JScrollPane listScrollPane = new JScrollPane(list);
@@ -431,18 +422,10 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
 
         }
 
-//        // EFFECTS: creates the list
-//        private void createList() {
-//            list = new JList(listModel);
-//            list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//            list.setSelectedIndex(0);
-//            list.setVisibleRowCount(10);
-//        }
-
         // EFFECTS: find the card with the given accountNo, printed a message otherwise
         public void findTargetCard() {
             int count = 1;
-            for (CreditCard eachCard : cardList.getCreditCardsList()) {
+            for (CreditCard eachCard : cardList.getList()) {
                 if (eachCard.getAccountNo() == Integer.valueOf(accountNo.getText())) {
                     targetCard = eachCard;
                     count++;

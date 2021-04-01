@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 //represents a list of cards remaining to be managed
-public class ToDoCards implements Writable {
+public class ToDoCards implements Writable, RecordList {
     List<CreditCard> cardList;
 
     // EFFECTS: constructs an empty collection of creditCardAccount
@@ -22,13 +22,30 @@ public class ToDoCards implements Writable {
         cardList.add(creditCard);
     }
 
+
     // EFFECTS: returns the card list
-    public List<CreditCard> getCreditCardsList() {
+    @Override
+    public List<CreditCard> getList() {
         return cardList;
     }
 
+
+//    // EFFECTS: returns the card list
+//    public List<CreditCard> getCreditCardsList() {
+//        return cardList;
+//    }
+
+
+//    // EFFECTS: returns the length of credit card list
+//    public int cardListLength() {
+//        return cardList.size();
+//    }
+
+
+
     // EFFECTS: returns the length of credit card list
-    public int cardListLength() {
+    @Override
+    public int length() {
         return cardList.size();
     }
 

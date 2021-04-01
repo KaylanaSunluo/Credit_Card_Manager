@@ -36,8 +36,10 @@ search for a list of transactions before a given date of that card
  
 ## Phase 4: Task 2
 
-- *Test and design a class in your model package that is robust. 
-You must have at least one method that throws a checked exception. 
-You must have one test for the case where the exception is expected and another where the exception is not expected.* 
-<br>**class**: CreditCard.java </br>
+- *Test and design a class in your model package that is robust.* 
+<br> **class**: CreditCard </br>
 <br>**method**: changeAccountNo(int)</br>
+- *Include a type hierarchy in the code.*
+<br> **interface**: RecordList</br>
+<br> **subclasses**: ToDoCards,TransactionList </br>
+<br>**overriding method**: changeAccountNo(int)</br>
