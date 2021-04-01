@@ -23,6 +23,8 @@ public class JsonReaderTest extends JsonTest {
             fail("IOException expected");
         } catch (IOException e) {
             // pass
+        } catch (FormatIncorrectException formatIncorrectException) {
+            fail("FormatIncorrectException was thrown!");
         }
     }
 
@@ -34,6 +36,8 @@ public class JsonReaderTest extends JsonTest {
             assertEquals(0, cardList.length());
         } catch (IOException e) {
             fail("Couldn't read from file");
+        } catch (FormatIncorrectException formatIncorrectException) {
+            fail("FormatIncorrectException was thrown!");
         }
     }
 
@@ -61,7 +65,23 @@ public class JsonReaderTest extends JsonTest {
 
         } catch (IOException e) {
             fail("Couldn't read from file");
+        } catch (FormatIncorrectException formatIncorrectException) {
+            fail("FormatIncorrectException was thrown!");
         }
+    }
+
+    @Test
+    public void testAddInvalidCard() {
+        JsonReader reader = new JsonReader("./data/testReaderInvalidToDoCards.json");
+        try {
+            ToDoCards cardList = reader.read();
+            List<CreditCard> cards = cardList.getList();
+        } catch (FormatIncorrectException e) {
+            //pass;
+        } catch (IOException e) {
+            fail("IOException was thrown!");
+        }
+
     }
 
 

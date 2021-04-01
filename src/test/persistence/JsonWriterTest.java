@@ -5,6 +5,7 @@ import model.CreditCard;
 import model.ToDoCards;
 import model.Transaction;
 import model.TransactionList;
+import model.exceptions.FormatIncorrectException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -58,6 +59,8 @@ public class JsonWriterTest extends JsonTest {
             assertEquals(0, cardList.length());
         } catch (IOException e) {
             fail("Exception should not have been thrown");
+        } catch (FormatIncorrectException formatIncorrectException) {
+            formatIncorrectException.printStackTrace();
         }
     }
 
@@ -96,6 +99,8 @@ public class JsonWriterTest extends JsonTest {
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");
+        } catch (FormatIncorrectException formatIncorrectException) {
+            formatIncorrectException.printStackTrace();
         }
     }
 }

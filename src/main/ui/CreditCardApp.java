@@ -6,6 +6,7 @@ import model.ToDoCards;
 import model.Transaction;
 import model.TransactionList;
 
+import model.exceptions.FormatIncorrectException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -286,6 +287,8 @@ public class CreditCardApp {
             System.out.println("Loaded from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
+        } catch (FormatIncorrectException formatIncorrectException) {
+            formatIncorrectException.printStackTrace();
         }
     }
 }

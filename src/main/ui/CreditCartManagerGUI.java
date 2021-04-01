@@ -370,6 +370,8 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
             } catch (IOException exception) {
                 JOptionPane.showMessageDialog(null,"Records cannot be loaded!",
                         "Load Message Warning", JOptionPane.WARNING_MESSAGE);
+            } catch (FormatIncorrectException formatIncorrectException) {
+                formatIncorrectException.printStackTrace();
             }
             clearButton.setEnabled(true);
         }
