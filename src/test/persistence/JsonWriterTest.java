@@ -58,9 +58,9 @@ public class JsonWriterTest extends JsonTest {
             cardList = reader.read();
             assertEquals(0, cardList.length());
         } catch (IOException e) {
-            fail("Exception should not have been thrown");
+            fail("Exception was thrown");
         } catch (FormatIncorrectException formatIncorrectException) {
-            formatIncorrectException.printStackTrace();
+            fail("FormatIncorrectException was thrown");
         }
     }
 
@@ -98,9 +98,9 @@ public class JsonWriterTest extends JsonTest {
                     new TransactionList());
 
         } catch (IOException e) {
-            fail("Exception should not have been thrown");
+            fail("IOException was thrown");
         } catch (FormatIncorrectException formatIncorrectException) {
-            formatIncorrectException.printStackTrace();
+            fail("FormatIncorrectException was thrown");
         }
     }
 }
