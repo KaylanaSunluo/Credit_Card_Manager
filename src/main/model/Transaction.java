@@ -40,7 +40,6 @@ public class Transaction implements Writable {
 
 
 
-    // REQUIRES: given date is in the form "yyyy/MM/dd"
     // EFFECTS: returns true if the transaction happens before the given date,
     //          false otherwise
     public boolean beforeDate(String givenDate) throws ParseException {
@@ -48,6 +47,7 @@ public class Transaction implements Writable {
         Date date1 = sdf.parse(date);
         Date date2 = sdf.parse(givenDate);
         return date1.before(date2);
+
     }
 
     @Override

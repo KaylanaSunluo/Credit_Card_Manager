@@ -45,7 +45,6 @@ public class TransactionList extends ArrayList {
     }
 
 
-    // REQUIRES: given date is in the form "yyyy/MM/dd"
     // MODIFIES: this
     // EFFECTS: returns a transaction list containing transactions happened before the given date
     public List<Transaction> transactionListBeforeGivenDate(String givenDate) throws ParseException {
@@ -58,14 +57,5 @@ public class TransactionList extends ArrayList {
         }
         return transactionListResult;
     }
-
-//    @Override
-//    public JSONObject toJson() {
-//        JSONObject json = new JSONObject();
-//        for (Transaction t: transactionList) {
-//            json.append("transactionList", t.toJson());
-//        }
-//        return json;
-//    }
 
 }

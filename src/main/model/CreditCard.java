@@ -4,6 +4,7 @@ package model;
 // name, address, phone number, credit limit (in dollars), balance (in dollars) and
 // a list of transactions (in dollars)
 
+import model.exceptions.FormatIncorrectException;
 import org.json.JSONObject;
 import persistence.Writable;
 
@@ -106,14 +107,16 @@ public class CreditCard implements Writable {
         transactionList.insertTransactionToTransactionList(transaction);
     }
 
-    //REQUIRES: newAccountNo > 0
     //MODIFIES: this
     //EFFECTS: changes the account number to the new number
-    public void changeAccountNo(int newAccountNo) {
-        this.accountNo = newAccountNo;
+    public void changeAccountNo(int newAccountNo) throws FormatIncorrectException {
+        if (newAccountNo > 0) {
+            this.accountNo = newAccountNo;
+        } else {
+            throw new FormatIncorrectException("FormatIncorrectException was thrown due to invalid new accountNo!");
+        }
     }
 
-    //REQUIRES: newBalance > 0
     //MODIFIES: this
     //EFFECTS: changes the balance to the given new balance
     public void changeBalance(double newBalance) {

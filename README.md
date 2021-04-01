@@ -31,6 +31,13 @@ read and extract necessary information.</p>
 add a transaction to the transaction list of that card, updating the balance at the same time
 - As a user, I want to be able to select a credit card account and 
 search for a list of transactions before a given date of that card
+- As a user, I want to be able to save my credit card list to file
+- As a user, I want to be able to be able to load my credit card list from file</p>
+ 
+## Phase 4: Task 2
 
--As a user, I want to be able to save my credit card list to file
--As a user, I want to be able to be able to load my credit card list from file 
+- *Test and design a class in your model package that is robust. 
+You must have at least one method that throws a checked exception. 
+You must have one test for the case where the exception is expected and another where the exception is not expected.* 
+<br>**class**: CreditCard.java </br>
+<br>**method**: changeAccountNo(int), changeBalance(double)</br>

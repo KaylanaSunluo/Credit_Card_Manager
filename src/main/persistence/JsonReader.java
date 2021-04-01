@@ -5,6 +5,7 @@ import model.CreditCard;
 import model.ToDoCards;
 import model.Transaction;
 import model.TransactionList;
+import model.exceptions.FormatIncorrectException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,8 +77,13 @@ public class JsonReader {
         double balance = jsonObject.getDouble("balance");
 
         CreditCard card = new CreditCard(cardNo, cardHolderName, address, phoneNo, creditLimit);
-        card.changeAccountNo(accountNo);
-        card.changeBalance(balance);
+        try {
+            card.changeAccountNo(accountNo);
+            card.changeBalance(balance);
+        } catch (FormatIncorrectException e) {
+            e.printStackTrace();
+        }
+
         try {
             TransactionList transactionList = parseTransactionList(jsonObject.getJSONArray("transactionList"));
             card.changeTransactionList(transactionList);

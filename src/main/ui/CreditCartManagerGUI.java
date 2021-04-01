@@ -4,6 +4,7 @@ import model.CreditCard;
 import model.ToDoCards;
 import model.Transaction;
 import model.TransactionList;
+import model.exceptions.FormatIncorrectException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import sun.audio.AudioPlayer;
@@ -18,6 +19,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.util.List;
 /*
@@ -47,7 +49,7 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
     private JsonReader jsonReader;
     private static final String JSON_STORE = "./data/GUIAccounts.json";
 
-    private ToDoCards cardList;
+    private ToDoCards cardList = new ToDoCards();
 
     private JButton addButton;
     private JButton clearButton;
@@ -57,7 +59,7 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
 
     private JPanel centerPane;
 
-    private int accountNum;
+    private int accountNum = 1;
 
     // EFFECTS: Constructs main window
     public CreditCartManagerGUI() {
@@ -127,7 +129,8 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
     // MODIFIES: list
     // EFFECTS: creates a list that will be put in a scroll pane
     private void createList() {
-        list = new JList(createListModel());
+        listModel = new DefaultListModel();
+        list = new JList(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
@@ -244,23 +247,22 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
     // EFFECTS: sets up a list model
     private DefaultListModel createListModel() {
 
-        CreditCard card1 = new CreditCard("1234 1234 4321 4321","Kay Sun",
-                "2205 Lower Mall, Vancouver","(778)1231123", 500);
-        CreditCard card2 = new CreditCard("1231 3131 4342 1235","Janice Lee",
-                "1002 Happy Garden, Vancouver","(778)9871153", 3000);
-        CreditCard card3 = new CreditCard("1783 3299 4992 9915","Tom Lu",
-                "1188 Agronomy Road, Vancouver","(778)1133222", 10000);
-        Transaction t1 = new Transaction("2020-03-07",200);
-        Transaction t2 = new Transaction("2009-09-09",20);
-        Transaction t3 = new Transaction("2015-03-15",100);
-
-        cardList = new ToDoCards();
-        card1.addTransactionToCard(t1);
-        card1.addTransactionToCard(t2);
-        card1.addTransactionToCard(t3);
+//        CreditCard card1 = new CreditCard("1234 1234 4321 4321","Kay Sun",
+//                "2205 Lower Mall, Vancouver","(778)1231123", 500);
+//        CreditCard card2 = new CreditCard("1231 3131 4342 1235","Janice Lee",
+//                "1002 Happy Garden, Vancouver","(778)9871153", 3000);
+//        CreditCard card3 = new CreditCard("1783 3299 4992 9915","Tom Lu",
+//                "1188 Agronomy Road, Vancouver","(778)1133222", 10000);
+//        Transaction t1 = new Transaction("2020-03-07",200);
+//        Transaction t2 = new Transaction("2009-09-09",20);
+//        Transaction t3 = new Transaction("2015-03-15",100);
+//
+//        cardList = new ToDoCards();
+//        card1.addTransactionToCard(t1);
+//        card1.addTransactionToCard(t2);
+//        card1.addTransactionToCard(t3);
 
         listModel = new DefaultListModel();
-
         return listModel;
     }
 
@@ -325,7 +327,6 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
                 JOptionPane.showMessageDialog(null,"Records saved!",
                         "Save Message", JOptionPane.WARNING_MESSAGE);
             } catch (FileNotFoundException exception) {
-                System.out.println("Unable to save to " + JSON_STORE);
                 JOptionPane.showMessageDialog(null,"Cannot find the file",
                         "Save Message warning", JOptionPane.WARNING_MESSAGE);
             }
@@ -348,31 +349,38 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
             accountNum = 1;
             try {
                 cardList = jsonReader.read();
-                System.out.println("Loaded from " + JSON_STORE);
-
                 listModel.clear();
                 for (CreditCard card: cardList.getCreditCardsList()) {
-                    card.changeAccountNo(accountNum++);
-                    listModel.addElement(showCardInfo(card));
+                    try {
+                        card.changeAccountNo(accountNum++);
+                        listModel.addElement(showCardInfo(card));
+                    } catch (FormatIncorrectException formatIncorrectException) {
+                        JOptionPane.showMessageDialog(null,"Invalid Account Number!",
+                                "AccountNo Warning", JOptionPane.WARNING_MESSAGE);
+                    }
                 }
 
                //Create the list and put it in a scroll pane.
-                list = new JList(listModel);
-                list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                list.setSelectedIndex(0);
-                list.setVisibleRowCount(10);
+                createNewList();
+
                 JScrollPane listScrollPane = new JScrollPane(list);
                 add(listScrollPane, BorderLayout.CENTER);
 
                 JOptionPane.showMessageDialog(null,"Records loaded!",
                         "Load Message", JOptionPane.WARNING_MESSAGE);
             } catch (IOException exception) {
-                System.out.println("Unable to read from file: " + JSON_STORE);
                 JOptionPane.showMessageDialog(null,"Records cannot be loaded!",
                         "Load Message Warning", JOptionPane.WARNING_MESSAGE);
             }
             clearButton.setEnabled(true);
         }
+
+//        private void createList() {
+//            list = new JList(listModel);
+//            list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//            list.setSelectedIndex(0);
+//            list.setVisibleRowCount(10);
+//        }
     }
 
     //EFFECTS: This listener is shared by the text field and the search button
@@ -399,9 +407,10 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
                             = targetCardTransactionList.transactionListBeforeGivenDate(date.getText());
                     listModel.clear();
                 } catch (ParseException parseException) {
-                    JOptionPane.showMessageDialog(null,"Invalid Date!",
+                    JOptionPane.showMessageDialog(null, "Invalid Date!",
                             "Warning", JOptionPane.WARNING_MESSAGE);
                 }
+
 
                 for (Transaction t: resultCardTransactionList) {
                     listModel.addElement(showTransactionInfo(t));
@@ -410,8 +419,10 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
                 clearAllTextFields();
             }
 
+
+
             // Put the list in a scroll pane.
-            createList();
+            createNewList();
             JScrollPane listScrollPane = new JScrollPane(list);
             add(listScrollPane, BorderLayout.CENTER);
 
@@ -420,13 +431,13 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
 
         }
 
-        // EFFECTS: creates the list
-        private void createList() {
-            list = new JList(listModel);
-            list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            list.setSelectedIndex(0);
-            list.setVisibleRowCount(10);
-        }
+//        // EFFECTS: creates the list
+//        private void createList() {
+//            list = new JList(listModel);
+//            list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//            list.setSelectedIndex(0);
+//            list.setVisibleRowCount(10);
+//        }
 
         // EFFECTS: find the card with the given accountNo, printed a message otherwise
         public void findTargetCard() {
@@ -486,8 +497,6 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
         }
     }
 
-
-
     //This listener is shared by the text field and the add button.
     class AddListener implements ActionListener, DocumentListener {
         private boolean alreadyEnabled = false;
@@ -503,7 +512,6 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
         // EFFECTS: adds a new credit card to the card list
         public void actionPerformed(ActionEvent e) {
             String cardNumber = cardNo.getText();
-
             //User didn't type in a unique name...
             if (name.equals("") || alreadyInList(cardNumber)) {
                 Toolkit.getDefaultToolkit().beep();
@@ -514,26 +522,32 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
 
             CreditCard newCard = new CreditCard(cardNo.getText(), name.getText(), address.getText(), phone.getText(),
                     Integer.valueOf(creditLimit.getText()));
+            try {
+                newCard.changeAccountNo(accountNum++);
+                cardList.addCard(newCard);
+            } catch (FormatIncorrectException formatIncorrectException) {
+                formatIncorrectException.printStackTrace();
+            }
 
-            newCard.changeAccountNo(accountNum++);
-            cardList.addCard(newCard);
+            int index = getIndex();
 
+            listModel.addElement(showCardInfo(newCard));
+
+            resetTextField();
+
+            setItemVisible(index);
+        }
+
+
+        // EFFECTS: returns first index if no selection, next index otherwise
+        private int getIndex() {
             int index = list.getSelectedIndex(); //get selected index
             if (index == -1) { //no selection, so insert at beginning
                 index = 0;
             } else {           //add after the selected item
                 index++;
             }
-
-            listModel.addElement(showCardInfo(newCard));
-
-            //Reset the text field.
-            cardNo.requestFocusInWindow();
-            clearAllTextFields();
-
-            //Select the new item and make it visible.
-            list.setSelectedIndex(index);
-            list.ensureIndexIsVisible(index);
+            return index;
         }
 
 
@@ -586,6 +600,18 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
         }
     }
 
+    //EFFECTS: selects the new item and make it visible.
+    private void setItemVisible(int index) {
+        list.setSelectedIndex(index);
+        list.ensureIndexIsVisible(index);
+    }
+
+    // EFFECTS: resets text field
+    private void resetTextField() {
+        cardNo.requestFocusInWindow();
+        clearAllTextFields();
+    }
+
     // MODIFIES: this
     // EFFECTS: clear all the text fields
     private void clearAllTextFields() {
@@ -617,6 +643,15 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: creates a new list
+    public void createNewList() {
+        list = new JList(listModel);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setSelectedIndex(0);
+        list.setVisibleRowCount(10);
+    }
+
     // EFFECTS: creates the GUI and show it.
     //           For thread safety, method should be invoked from the event-dispatching thread.
     private static void createAndShowGUI() {
@@ -645,6 +680,8 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
             }
         });
     }
+
+
 
 }
 
