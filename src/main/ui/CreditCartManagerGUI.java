@@ -27,6 +27,8 @@ import java.util.List;
  */
 
 public class CreditCartManagerGUI extends JPanel implements ListSelectionListener {
+
+
     private JList list;
     private DefaultListModel listModel;
 
@@ -55,10 +57,15 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
     private JButton saveButton;
     private JButton loadButton;
     private JButton searchButton;
-
     private JPanel centerPane;
 
     private int accountNum = 1;
+
+    private SearchListener searchListener;
+    private AddListener addListener;
+    private ClearListener clearListener;
+    private SaveListener saveListener;
+    private LoadListener loadListener;
 
     // EFFECTS: Constructs main window
     public CreditCartManagerGUI() {
@@ -70,13 +77,13 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
         JScrollPane listScrollPane = new JScrollPane(list);
 
         addButton = new JButton(addCardString);
-        AddListener addListener = new AddListener(addButton);
+        addListener = new AddListener(addButton);
         addButton.setActionCommand(addCardString);
         addButton.addActionListener(addListener);
         addButton.setEnabled(false);
 
         searchButton = new JButton(searchString);
-        SearchListener searchListener = new SearchListener(searchButton);
+        searchListener = new SearchListener(searchButton);
         searchButton.setActionCommand(searchString);
         searchButton.addActionListener(searchListener);
         searchButton.setEnabled(false);
@@ -154,7 +161,7 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
     // EFFECTS: adds a clearListener to clearButton
     private void addClearListenerToButton() {
         clearButton = new JButton(clearString);
-        ClearListener clearListener = new ClearListener(clearButton);
+        clearListener = new ClearListener(clearButton);
         clearButton.setActionCommand(clearString);
         clearButton.addActionListener(clearListener);
     }
@@ -163,7 +170,7 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
     // EFFECTS: adds a loadListener to loadButton
     private void addLoadListenerToButton() {
         loadButton = new JButton(loadString);
-        LoadListener loadListener = new LoadListener(loadButton);
+        loadListener = new LoadListener(loadButton);
         loadButton.setActionCommand(loadString);
         loadButton.addActionListener(loadListener);
     }
@@ -172,7 +179,7 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
     // EFFECTS: adds a saveListener to saveButton
     private void addSaveListenerToButton() {
         saveButton = new JButton(saveString);
-        SaveListener saveListener = new SaveListener(saveButton);
+        saveListener = new SaveListener(saveButton);
         saveButton.setActionCommand(saveString);
         saveButton.addActionListener(saveListener);
     }

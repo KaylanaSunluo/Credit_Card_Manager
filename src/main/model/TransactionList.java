@@ -43,11 +43,6 @@ public class TransactionList extends ArrayList implements RecordList {
         return transactionList;
     }
 
-//    // EFFECTS: returns the transaction list as a List<Transaction>
-//    public List<Transaction> getTransactionList() {
-//        return transactionList;
-//    }
-
 
     // MODIFIES: this
     // EFFECTS: returns a transaction list containing transactions happened before the given date

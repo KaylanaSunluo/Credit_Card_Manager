@@ -58,8 +58,6 @@ public class Transaction implements Writable {
 
         return json;
     }
-
-
 }
 
 

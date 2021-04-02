@@ -20,8 +20,8 @@ public class CreditCard implements Writable {
     private String phoneNo;                  // the phone number of card holder
     private int creditLimit;                 // credit limit
     private double balance;                  // the current balance of the card account,with
-    // positive representing the money owed to the bank and
-    // negative representing the money saved in the credit card
+                                             // positive representing the money owed to the bank and
+                                             // negative representing the money saved in the credit card
 
     private TransactionList transactionList;  // the list of past transactions
 

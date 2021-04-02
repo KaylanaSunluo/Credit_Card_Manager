@@ -30,18 +30,6 @@ public class ToDoCards implements Writable, RecordList {
     }
 
 
-//    // EFFECTS: returns the card list
-//    public List<CreditCard> getCreditCardsList() {
-//        return cardList;
-//    }
-
-
-//    // EFFECTS: returns the length of credit card list
-//    public int cardListLength() {
-//        return cardList.size();
-//    }
-
-
 
     // EFFECTS: returns the length of credit card list
     @Override
