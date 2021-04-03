@@ -26,7 +26,7 @@ import java.util.List;
  *  and users can add a new card or search for transactions
  */
 
-public class CreditCartManagerGUI extends JPanel implements ListSelectionListener {
+public class CreditCardManagerGUI extends JPanel implements ListSelectionListener {
 
 
     private JList list;
@@ -68,12 +68,12 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
     private LoadListener loadListener;
 
     // EFFECTS: Constructs main window
-    public CreditCartManagerGUI() {
+    public CreditCardManagerGUI() {
         super(new BorderLayout());
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
-        createList();
+        createListInNewModel();
         JScrollPane listScrollPane = new JScrollPane(list);
 
         addButton = new JButton(addCardString);
@@ -133,8 +133,8 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
     }
 
     // MODIFIES: list
-    // EFFECTS: creates a list that will be put in a scroll pane
-    private void createList() {
+    // EFFECTS: creates a list in a new list model
+    private void createListInNewModel() {
         listModel = new DefaultListModel();
         list = new JList(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -367,7 +367,7 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
                 }
 
                //Create the list and put it in a scroll pane.
-                createNewList();
+                createList();
 
                 JScrollPane listScrollPane = new JScrollPane(list);
                 add(listScrollPane, BorderLayout.CENTER);
@@ -419,8 +419,8 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
                 clearAllTextFields();
             }
 
-            // Put the list in a scroll pane.
-            createNewList();
+            // Create a new list and put the list in a scroll pane.
+            createList();
             JScrollPane listScrollPane = new JScrollPane(list);
             add(listScrollPane, BorderLayout.CENTER);
 
@@ -635,7 +635,7 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
 
     //MODIFIES: this
     //EFFECTS: creates a new list
-    public void createNewList() {
+    public void createList() {
         list = new JList(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
@@ -651,7 +651,7 @@ public class CreditCartManagerGUI extends JPanel implements ListSelectionListene
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
-        JComponent newContentPane = new CreditCartManagerGUI();
+        JComponent newContentPane = new CreditCardManagerGUI();
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
 
