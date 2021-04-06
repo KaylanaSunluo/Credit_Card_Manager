@@ -50,8 +50,12 @@ public class TransactionList extends ArrayList implements RecordList {
         List<Transaction> transactionListResult = new ArrayList<>();
 
         for (Transaction eachTransaction : transactionList) {
-            if (eachTransaction.beforeDate(givenDate)) {
-                transactionListResult.add(eachTransaction);
+            try {
+                if (eachTransaction.beforeDate(givenDate)) {
+                    transactionListResult.add(eachTransaction);
+                }
+            } catch (ParseException e) {
+                throw new ParseException("ParseException was thrown",1);
             }
         }
         return transactionListResult;

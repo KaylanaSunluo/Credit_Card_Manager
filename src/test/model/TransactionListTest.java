@@ -7,8 +7,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TransactionListTest {
     private Transaction t1;
@@ -82,34 +81,61 @@ public class TransactionListTest {
 
 
     @Test
-    public void testRemoveTransactionBeforeGivenDateNotSame() throws ParseException {
+    public void testTransactionBeforeGivenDateNotSame() {
         transactionList.insertTransactionToTransactionList(t1);
         transactionList.insertTransactionToTransactionList(t2);
         transactionList.insertTransactionToTransactionList(t3);
         transactionList.insertTransactionToTransactionList(t4);
 
-        List<Transaction> transactionListAfterRemoving =
-                transactionList.transactionListBeforeGivenDate("2015-12-12");
+        try {
+            List<Transaction> transactionListAfterRemoving =
+                    transactionList.transactionListBeforeGivenDate("2015-12-12");
+            assertEquals(1, transactionListAfterRemoving.size());
+            assertTrue(transactionListAfterRemoving.contains(t1));
 
-        assertEquals(1, transactionListAfterRemoving.size());
-        assertTrue(transactionListAfterRemoving.contains(t1));
+        } catch (ParseException e) {
+            fail("ParseException was thrown");
+        }
+
+
     }
 
 
     @Test
-    public void testRemoveTransactionBeforeGivenDateSame() throws ParseException {
+    public void testTransactionBeforeGivenDateSame() {
 
         transactionList.insertTransactionToTransactionList(t1);
         transactionList.insertTransactionToTransactionList(t2);
         transactionList.insertTransactionToTransactionList(t3);
         transactionList.insertTransactionToTransactionList(t4);
 
-        List<Transaction> transactionListAfterRemoving =
-                transactionList.transactionListBeforeGivenDate("2016-01-24");
+        try {
+            List<Transaction> transactionListAfterRemoving =
+                    transactionList.transactionListBeforeGivenDate("2016-01-24");
+            assertEquals(2, transactionListAfterRemoving.size());
+            assertTrue(transactionListAfterRemoving.contains(t1));
+            assertTrue(transactionListAfterRemoving.contains(t2));
 
-        assertEquals(2, transactionListAfterRemoving.size());
-        assertTrue(transactionListAfterRemoving.contains(t1));
-        assertTrue(transactionListAfterRemoving.contains(t2));
+        } catch (ParseException e) {
+            fail("ParseException was thrown");
+        }
+    }
+
+
+
+
+    @Test
+    public void testTransactionBeforeInvalidDate() {
+        transactionList.insertTransactionToTransactionList(t1);
+        transactionList.insertTransactionToTransactionList(t2);
+
+        try {
+            List<Transaction> transactionListAfterRemoving =
+                    transactionList.transactionListBeforeGivenDate("1234");
+            fail("ParseException should have been thrown.");
+        } catch (ParseException e) {
+            //pass;
+        }
     }
 
 

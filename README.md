@@ -39,6 +39,10 @@ search for a list of transactions before a given date of that card
 - *Test and design a class in the model package that is robust.* 
 <br> **class**: CreditCard </br>
 <br>**method**: changeAccountNo(int)</br>
+<br> The FormatIncorrectException is caught in CreditCardManagerGUI.</br>
+<br> **class**: TransactionList </br>
+<br>**method**: transactionListBeforeGivenDate(String)</br>
+<br> The ParseException is caught in CreditCardManagerGUI.</br>
 
 - *Include a type hierarchy in the code.*
 <br> **interface**: RecordList</br>

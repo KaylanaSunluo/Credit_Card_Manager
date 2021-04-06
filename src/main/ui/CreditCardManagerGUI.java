@@ -516,7 +516,8 @@ public class CreditCardManagerGUI extends JPanel implements ListSelectionListene
                 newCard.changeAccountNo(accountNum++);
                 cardList.addCard(newCard);
             } catch (FormatIncorrectException formatIncorrectException) {
-                formatIncorrectException.printStackTrace();
+                JOptionPane.showMessageDialog(null,"Can't add!",
+                        "Warning", JOptionPane.WARNING_MESSAGE);
             }
 
             int index = getIndex();
